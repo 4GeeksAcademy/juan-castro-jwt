@@ -32,6 +32,7 @@ export const Home = () => {
 	useEffect(() => {
 		loadMessage()
 	}, [])
+	const token = localStorage.getItem("access_token")
 
 	return (
 		<div className="text-center mt-5">
@@ -39,7 +40,19 @@ export const Home = () => {
 			<p className="lead">
 				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
 			</p>
-			<button onClick={ ()=> navigate("/registro")}>ir a registro</button>
+
+
+			{
+				token ? (
+					<button onClick={() => navigate("/dashboard")}>ir a dahsboard</button>
+				) : (
+					<div><button onClick={() => navigate("/registro")}>ir a registro</button>
+						<button onClick={() => navigate("/login")}>ir a login</button>
+					</div>
+				)
+			}
+
+
 
 			<div className="alert alert-info">
 				{store.message ? (

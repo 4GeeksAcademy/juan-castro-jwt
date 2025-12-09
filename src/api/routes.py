@@ -6,12 +6,15 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
+from datetime import timedelta
+from flask_jwt_extended import  JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 bcrypt = Bcrypt()
+jwt = JWTManager()
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -71,4 +74,38 @@ def create_user():
     #retornar los datos del usuario
     return jsonify({"msg":"todo un exito", "nuevo_usuario": new_user.serialize()}), 201
 
+
+@api.route("/login",methods=["POST"])
+def login():
+    data = request.get_json()
+    if not data:
+        return jsonify({"msj":"no hay data"}), 400 
+    email = data.get("email")
+    password = data.get("password")
+    if not email or not password:
+        return jsonify({"msj":"no mandaste uno de los datos"}), 400
+    current_user = User.query.filter_by(email=email).first()
+    if not current_user:
+        return jsonify({"msj":"no existe ese mail"}), 404
+    hashed_password = current_user.password
+    password_match = bcrypt.check_password_hash(hashed_password,password)
+    if not password_match:
+        return jsonify({"msj":"la contraseña no coincide"}), 411
+    expires = timedelta(minutes=30)
+    user_id = current_user.id
+    access_token = create_access_token(identity=str(user_id),expires_delta=expires)
+    return jsonify({"access_token":access_token}), 200
+
+
+@api.route("/restringido")
+@jwt_required()
+def restringido():
+    current_user_id = get_jwt_identity()
+    if not current_user_id:
+        return jsonify({"msg":"error"}), 401
+    user = User.query.get(current_user_id).one()
+    if not user:
+        return jsonify({"msg":"el usuario no existe"}), 404
+    
+    return jsonify({"user":user.serialize()}), 200
 
