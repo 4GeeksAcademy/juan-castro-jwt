@@ -1,54 +1,95 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const Login = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    let navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const {store, dispatch} = useGlobalReducer()
+    const navigate = useNavigate();
 
     const handlerLogin = async () => {
-
-        try {
-            const response = await fetch("https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/login", {
-                method: "POST",
-                body: JSON.stringify({ email: email, password: password }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            let data = await response.json()
-            if (data) {
-                alert("Bienvenido")
-                console.log(data.access_token)
-                localStorage.setItem("access_token", data.access_token)
-                navigate("/dashboard")
-            }
-
-        } catch (error) {
-            console.error(error)
+        if (email.length < 7 || password.length < 8) {
+            alert("Email o password inválidos");
+            return;
         }
 
-    }
+        try {
+            setLoading(true);
 
+            const response = await fetch(
+                "https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/login",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email,
+                        password                        
+                    }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            const data = await response.json();
+            console.log("esta es la data: ", data)
+
+            if (response.ok) {
+                localStorage.setItem("access_token", data.access_token);
+                dispatch({type:"current_user", payload:data})
+                alert("Bienvenido");
+                navigate("/dashboard");
+            } else {
+                alert("Credenciales incorrectas");
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-        <div>
-            <h1>soy el login</h1>
-            <label htmlFor="email">ingresa tu email:  </label>
-            <input type="email" id="email" onChange={e => setEmail(e.target.value)} />
-            <br /> <br />
-            <label htmlFor="password">ingresa el password:  </label>
-            <input type="password" id="password" onChange={e => setPassword(e.target.value)} />
-            <br /><br />
-            <button onClick={handlerLogin}>ingresar</button>
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+            <div className="card p-4 shadow-sm" style={{ maxWidth: "420px", width: "100%" }}>
+                <h2 className="text-center mb-4">Login</h2>
 
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        className="form-control"
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                </div>
 
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        className="form-control"
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                </div>
+
+                
+                <button
+                    className="btn btn-success w-100"
+                    onClick={handlerLogin}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <span className="spinner-border spinner-border-sm" role="status" />
+                    ) : (
+                        "Ingresar"
+                    )}
+                </button>
+            </div>
         </div>
-    )
-
-}
+    );
+};
 
 export default Login;

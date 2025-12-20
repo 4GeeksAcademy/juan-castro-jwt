@@ -12,6 +12,8 @@ import { Demo } from "./pages/Demo";
 import Registro from "./pages/Registro.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import QuinesSomos from "./pages/QuienesSomos.jsx";
+import Contactanos from "./pages/Contactanos.jsx";  
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -31,6 +33,8 @@ export const router = createBrowserRouter(
         <Route path= "/dashboard" element={<Dashboard />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
+        <Route path="/contactanos" element={<Contactanos />} />
+        <Route path="/quienes" element={<QuinesSomos />} />
       </Route>
     )
 );

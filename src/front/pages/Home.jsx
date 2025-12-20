@@ -2,6 +2,9 @@ import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useNavigate } from "react-router-dom";
+import Logout from "../components/Logout";
+import Hero from "../components/Hero.jsx";
+
 
 export const Home = () => {
 
@@ -36,33 +39,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-
-
-			{
-				token ? (
-					<button onClick={() => navigate("/dashboard")}>ir a dahsboard</button>
-				) : (
-					<div><button onClick={() => navigate("/registro")}>ir a registro</button>
-						<button onClick={() => navigate("/login")}>ir a login</button>
-					</div>
-				)
-			}
-
-
-
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
-			</div>
+			<Hero/>
 		</div>
 	);
 }; 

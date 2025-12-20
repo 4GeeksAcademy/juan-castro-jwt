@@ -1,60 +1,108 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-const Registro = ()=>{
-
-    const [name,setName] = useState("")
-    const [email,setEmail] = useState("")
-    const [password,setPassword] = useState("")
-
-
-
-    const handlerRegistro = async ()=>{
-        if(name.length < 2 || email.length < 7 || password.length < 8){
-            alert("algun dato quedo corto")
-            return
+const Registro = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [role, setRole] = useState("client");
+    const [loading, setLoading] = useState(false);
+    
+    let navigate = useNavigate()
+    const handlerRegistro = async () => {
+        if (name.length < 2 || email.length < 7 || password.length < 8) {
+            alert("Algún dato quedó corto");
+            return;
         }
         const payload = {
             name,
             email,
-            password
-        }
-
+            password,
+            role // :apuntando_hacia_la_izquierda: viaja el select
+        };
         try {
-            const response = await fetch("https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/create_user",{
-                method:"POST",
-                body: JSON.stringify(payload),
-                headers:{
-                    "Content-Type": "application/json"
+            setLoading(true);
+            const response = await fetch(
+                "https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/create_user",
+                {
+                    method: "POST",
+                    body: JSON.stringify(payload),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
-            })
-
-            let data = await response.json()
-            if(data){
-                alert("el usuario se creo con exito")
-                console.log(data.nuevo_usuario)
+            );
+            const data = await response.json();
+            if (response.ok) {
+                alert("El usuario se creó con éxito");
+                navigate("/login")
+                console.log(data.nuevo_usuario);
+            } else {
+                alert("Error al crear usuario");
             }
-
         } catch (error) {
-            console.error(error)
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
-        
-    }
-
-    return(
-        <div>
-            <h1>registro</h1>
-            <label htmlFor="name">nombre:</label>
-            <input type="text" id="name" onChange={e => setName(e.target.value)} />
-            <label htmlFor="email">email:</label>
-            <input type="email" id="email" onChange={e => setEmail(e.target.value)} />
-            <label htmlFor="password">password:</label>
-            <input type="password" id="password" onChange={e => setPassword(e.target.value)} />
-            <button onClick={handlerRegistro}>confirmar tus datos</button>
+    };
+    return (
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+            <div className="card p-4 shadow-sm" style={{ maxWidth: "420px", width: "100%" }}>
+                <h2 className="text-center mb-4">Registro</h2>
+                <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Nombre</label>
+                    <input
+                        type="text"
+                        id="name"
+                        className="form-control"
+                        onChange={e => setName(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        className="form-control"
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        className="form-control"
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label htmlFor="role" className="form-label">Tipo de usuario</label>
+                    <select
+                        id="role"
+                        className="form-select"
+                        value={role}
+                        onChange={e => setRole(e.target.value)}
+                    >
+                        <option value="adm">Administrador</option>
+                        <option value="trainer">Entrenador</option>
+                        <option value="client">Cliente</option>
+                    </select>
+                </div>
+                <button
+                    className="btn btn-primary w-100"
+                    onClick={handlerRegistro}
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <span className="spinner-border spinner-border-sm" role="status" />
+                    ) : (
+                        "Registrar"
+                    )}
+                </button>
+            </div>
         </div>
-
-    )
-} 
-
-export default Registro; 
+    );
+};
+export default Registro;

@@ -40,9 +40,10 @@ def create_user():
     email = data.get("email")
     is_active = data.get("is_active", True )
     password = data.get("password")
+    role = data.get("role")
 
     #verificar si las variables tienen contenido
-    if not name or not email or not password:
+    if not name or not email or not password or not role:
          return jsonify({"msg":"algun dato te falto"}), 400
     
     #confirmar si ese usuario existe en la base de datos buscandolo por email
@@ -62,7 +63,8 @@ def create_user():
         name=name,
         email=email,
         password=passhash,
-        is_active=is_active
+        is_active=is_active,
+        role=role
         )
 
     #anexarlo a la sesion
@@ -94,7 +96,9 @@ def login():
     expires = timedelta(minutes=30)
     user_id = current_user.id
     access_token = create_access_token(identity=str(user_id),expires_delta=expires)
-    return jsonify({"access_token":access_token}), 200
+    payload = current_user.serialize()
+    payload["access_token"] = access_token
+    return jsonify(payload), 200
 
 
 @api.route("/restringido")
