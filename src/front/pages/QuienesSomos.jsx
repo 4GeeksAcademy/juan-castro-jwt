@@ -5,7 +5,7 @@ const QuinesSomos = ()=>{
     return (
         <div>
             <h1>
-                Quienes somos juan
+                Quienes somos
             </h1>
 
         </div>
