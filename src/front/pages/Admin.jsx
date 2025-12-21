@@ -5,7 +5,7 @@ import { useEffect,useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 
-const Trainer = ()=> {
+const Admin = ()=> {
     
 const {store, dispatch} = useGlobalReducer()
     const [user, setUser] = useState("")
@@ -32,7 +32,7 @@ const {store, dispatch} = useGlobalReducer()
 
    return(
      <div>
-        <h1>soy el Trainer</h1>
+        <h1>soy el Admin</h1>
         <h2>bienvenido: {
         store.current_user.name && store.current_user.name
         }</h2>
@@ -40,4 +40,4 @@ const {store, dispatch} = useGlobalReducer()
    )
 }
 
-export default Trainer;
+export default Admin;

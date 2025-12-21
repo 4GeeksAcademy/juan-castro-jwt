@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import QuinesSomos from "./pages/QuienesSomos.jsx";
 import Contactanos from "./pages/Contactanos.jsx";  
 import Trainer from "./pages/Trainer.jsx";
+import Admin from "./pages/Admin.jsx";
 
 
 export const router = createBrowserRouter(
@@ -38,6 +39,7 @@ export const router = createBrowserRouter(
         <Route path="/contactanos" element={<Contactanos />} />
         <Route path="/quienes" element={<QuinesSomos />} />
         <Route path="/trainer" element={<Trainer />} />
+        <Route path="/admin" element={<Admin />} />
       </Route>
     )
 );
