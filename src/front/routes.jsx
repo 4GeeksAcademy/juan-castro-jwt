@@ -14,6 +14,8 @@ import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import QuinesSomos from "./pages/QuienesSomos.jsx";
 import Contactanos from "./pages/Contactanos.jsx";  
+import Trainer from "./pages/Trainer.jsx";
+
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,6 +37,7 @@ export const router = createBrowserRouter(
         <Route path="/demo" element={<Demo />} />
         <Route path="/contactanos" element={<Contactanos />} />
         <Route path="/quienes" element={<QuinesSomos />} />
+        <Route path="/trainer" element={<Trainer />} />
       </Route>
     )
 );
