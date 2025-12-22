@@ -34,9 +34,9 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/trainer">trainer</Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/admin">admin</Link>
-                        </li>
+                        </li> */}
                     </ul>
 
                     <div className="d-flex">

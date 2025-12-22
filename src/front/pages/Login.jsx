@@ -38,9 +38,8 @@ const Login = () => {
             if (response.ok) {
                 localStorage.setItem("access_token", data.access_token);
                 dispatch({ type: "current_user", payload: data })
-                alert("Bienvenido");
-
-                // Determinar role de forma robusta y mapear a ruta
+                window.alert("Bienvenido");
+                
                 const role = data?.user?.role || data?.role || data?.current_user?.role || null;
                 const roleRouteMap = {
                     adm: "/admin",
