@@ -50,7 +50,7 @@ export const Navbar = () => {
                                     type="button"
                                     onClick={() => {
                                         localStorage.removeItem("access_token");
-                                        navigate("/login");
+                                        navigate("/");
                                     }}
                                 >
                                     Logout
