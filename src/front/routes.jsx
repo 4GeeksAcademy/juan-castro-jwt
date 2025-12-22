@@ -1,5 +1,3 @@
-// Import necessary components and functions from react-router-dom.
-
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -12,14 +10,15 @@ import { Demo } from "./pages/Demo";
 import Registro from "./pages/Registro.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
-import QuinesSomos from "./pages/QuienesSomos.jsx";
-import Contactanos from "./pages/Contactanos.jsx";  
+import QuienesSomos from "./pages/QuienesSomos.jsx";
+import Contactanos from "./pages/Contactanos.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx"; 
 import Trainer from "./pages/Trainer.jsx";
 import Admin from "./pages/Admin.jsx";
 
-
 export const router = createBrowserRouter(
     createRoutesFromElements(
+
     // CreateRoutesFromElements function allows you to build route elements declaratively.
     // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
     // Root, on the contrary, create a sister Route, if you have doubts, try it!
@@ -41,5 +40,6 @@ export const router = createBrowserRouter(
         <Route path="/trainer" element={<Trainer />} />
         <Route path="/admin" element={<Admin />} />
       </Route>
+
     )
 );

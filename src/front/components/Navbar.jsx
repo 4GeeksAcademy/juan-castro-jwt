@@ -25,6 +25,15 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" to="/">Home</Link>
                         </li>
+
+
+                    {/* ESTE DASHBOARD ESTA QUI SOLO PARA ENSAYAR VISTA  */}
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/admin">Dashboard</Link>
+                    </li>
+
+                    
+
                         <li className="nav-item">
                             <Link className="nav-link" to="/quienes">Quienes Somos</Link>
                         </li>
