@@ -38,7 +38,6 @@ const AdminDashboard = () => {
 
     return (
         <div className='container mt-5'>
-            {/* <Navbar /> */}
             <h2 className='mb-4'>Panel de Administración</h2>
 
             {!editingUser ? (

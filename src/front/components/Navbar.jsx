@@ -25,15 +25,6 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" to="/">Home</Link>
                         </li>
-
-
-                    {/* ESTE DASHBOARD ESTA QUI SOLO PARA ENSAYAR VISTA  */}
-                    <li className="nav-item">
-                        <Link className="nav-link" to="/admin">Dashboard</Link>
-                    </li>
-
-                    
-
                         <li className="nav-item">
                             <Link className="nav-link" to="/quienes">Quienes Somos</Link>
                         </li>
@@ -43,7 +34,10 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/trainer">trainer</Link>
                         </li>
-                        
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/admin">admin vista</Link>
+                        </li>
+
                     </ul>
 
                     <div className="d-flex">
