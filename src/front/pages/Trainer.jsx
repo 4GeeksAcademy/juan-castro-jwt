@@ -1,4 +1,5 @@
 import React from "react";
+export const Trainer = () => <div>Vista de Trainer</div>;import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logout from "../components/Logout";
 import { useEffect,useState } from "react";
