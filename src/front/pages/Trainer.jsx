@@ -17,7 +17,7 @@ const Trainer = () => {
       console.log(data);
       if (type === "people") {
         dispatch({ type: "set_people_details", payload: data.result.properties });
-        navigate(`/PeopleDetails`);
+        navigate(`/dashboard`);
       } else if (type === "vehicle") {
         dispatch({ type: "set_vehicle_details", payload: data.result.properties });
         navigate(`/VehicleDetails`);
@@ -170,8 +170,8 @@ const Trainer = () => {
                   <h5 className="card-title">{ele.email}</h5>
                   <h5 className="card-title">{ele.role}</h5>
                   <div className="botones-cards">
-                    <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.url, "people")} >Learn More!!</a>
-                    <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a>
+                    <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.id, "people")} >Revisar datos cliente</a>
+                    {/* <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a> */}
                   </div>
                 </div>
 
