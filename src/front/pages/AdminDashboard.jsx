@@ -60,9 +60,9 @@ const AdminDashboard = () => {
                         </thead>
                         <tbody>
                             {users.map(user => (
-                                <tr key={user.id}>
-                                    <td>{user.name}</td>
-                                    <td>{user.email}</td>
+                                <tr key={users.id}>
+                                    <td>{users.name}</td>
+                                    <td>{users.email}</td>
                                     <td>
                                         <span className={
                                             user.role === 'admin' ? 'badge bg-primary' :
