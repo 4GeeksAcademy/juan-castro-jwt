@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Navbar } from '../components/Navbar.jsx';
 
 const AdminDashboard = () => {
@@ -60,9 +61,9 @@ const AdminDashboard = () => {
                         </thead>
                         <tbody>
                             {users.map(user => (
-                                <tr key={users.id}>
-                                    <td>{users.name}</td>
-                                    <td>{users.email}</td>
+                                <tr key={user.id}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
                                     <td>
                                         <span className={
                                             user.role === 'admin' ? 'badge bg-primary' :

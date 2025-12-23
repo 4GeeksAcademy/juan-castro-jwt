@@ -159,7 +159,9 @@ const Trainer = () => {
         {console.log("STORE:", store)}
         {
           store.data_people?.users?.length > 0 &&
-          store.data_people.users.map((ele) => {
+          store.data_people.users
+          .filter(ele => (ele.role || "").toLowerCase() === "client")
+          .map((ele) => {
             return (
               <div className="card" style={{ width: "18rem" }} key={ele.uid}>
                 <img src="https://placehold.org/400x200/000000/ffffff" className="card-img-top" alt="..." />
@@ -167,7 +169,7 @@ const Trainer = () => {
                   <h5 className="card-title">{ele.name}</h5>
                   <h5 className="card-title">{ele.email}</h5>
                   <h5 className="card-title">{ele.role}</h5>
-                  <div className="botones cards">
+                  <div className="botones-cards">
                     <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.url, "people")} >Learn More!!</a>
                     <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a>
                   </div>
