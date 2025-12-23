@@ -2,6 +2,7 @@ export const initialStore=()=>{
   return{
     message: null,
     current_user:{},
+    people_list: [],
     todos: [
       {
         id: 1,
@@ -40,7 +41,15 @@ export default function storeReducer(store, action = {}) {
       return{
         ...store, current_user:data
       }
-
+    
+    case "save_people_list":
+      return {
+        ...store,
+        people_list: action.payload
+      };
+    
+     case "data_people":
+      return { ...store, data_people: action.payload };
 
     default:
       throw Error('Unknown action.');

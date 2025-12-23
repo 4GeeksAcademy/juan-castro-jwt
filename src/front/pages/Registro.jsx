@@ -23,7 +23,7 @@ const Registro = () => {
         try {
             setLoading(true);
             const response = await fetch(
-                "https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/create_user",
+                "https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/create_user",
                 {
                     method: "POST",
                     body: JSON.stringify(payload),

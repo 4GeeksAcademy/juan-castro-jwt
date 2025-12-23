@@ -40,6 +40,10 @@ export const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/contactanos">Contactanos</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/trainer">trainer</Link>
+                        </li>
+                        
                     </ul>
 
                     <div className="d-flex">

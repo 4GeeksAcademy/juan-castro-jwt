@@ -6,7 +6,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const {store, dispatch} = useGlobalReducer()
+    const { store, dispatch } = useGlobalReducer()
     const navigate = useNavigate();
 
     const handlerLogin = async () => {
@@ -19,12 +19,12 @@ const Login = () => {
             setLoading(true);
 
             const response = await fetch(
-                "https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/login",
+                "https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/login",
                 {
                     method: "POST",
                     body: JSON.stringify({
                         email,
-                        password                        
+                        password
                     }),
                     headers: {
                         "Content-Type": "application/json"
@@ -37,9 +37,17 @@ const Login = () => {
 
             if (response.ok) {
                 localStorage.setItem("access_token", data.access_token);
-                dispatch({type:"current_user", payload:data})
-                alert("Bienvenido");
-                navigate("/dashboard");
+                dispatch({ type: "current_user", payload: data })
+                window.alert("Bienvenido");
+                
+                const role = data?.user?.role || data?.role || data?.current_user?.role || null;
+                const roleRouteMap = {
+                    adm: "/admin",
+                    trainer: "/trainer",                    
+                    client: "/dashboard"
+                };
+                const destination = role ? (roleRouteMap[role] || "/dashboard") : "/dashboard";
+                navigate(destination);
             } else {
                 alert("Credenciales incorrectas");
             }
@@ -75,7 +83,7 @@ const Login = () => {
                     />
                 </div>
 
-                
+
                 <button
                     className="btn btn-success w-100"
                     onClick={handlerLogin}
