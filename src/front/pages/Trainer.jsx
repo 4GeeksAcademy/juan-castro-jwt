@@ -126,7 +126,7 @@ const Trainer = () => {
     dispatch({ type: "del_fav", payload: uid })
   };
 
-  // para people
+  
   useEffect(() => {
     const getPeople = async () => {
       try {
@@ -153,7 +153,9 @@ const Trainer = () => {
 
   return (
     <div>
-      <h1>Clientes</h1><br />
+      <h1>Hola: {
+        store.current_user.name && store.current_user.name
+        }</h1><br /><h4>A quien quieres acompañar</h4><br />
       
       <div className="cards-container">
         {console.log("STORE:", store)}
@@ -174,7 +176,6 @@ const Trainer = () => {
                     {/* <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a> */}
                   </div>
                 </div>
-
               </div>
             );
           })
