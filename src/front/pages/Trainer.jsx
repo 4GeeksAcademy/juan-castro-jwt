@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useGlobalReducer from "../hooks/useGlobalReducer";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Trainer = () => {
