@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Navbar } from '../components/Navbar.jsx';
 
 const AdminDashboard = () => {
@@ -16,6 +17,8 @@ const AdminDashboard = () => {
             .catch(error => console.error(error))
     }, []);
 
+
+    
     const handleCreateClick = () => {
         setEditingUser({});
         setFormData({ name: '', email: '', role: 'client' });
@@ -84,7 +87,6 @@ const AdminDashboard = () => {
 
     return (
         <div className='container mt-5'>
-            {/* <Navbar /> */}
             <h2 className='mb-4'>Panel de Administración</h2>
 
             {!editingUser ? (

@@ -17,17 +17,12 @@ const Trainer = () => {
       console.log(data);
       if (type === "people") {
         dispatch({ type: "set_people_details", payload: data.result.properties });
-        navigate(`/PeopleDetails`);
-      } else if (type === "vehicle") {
-        dispatch({ type: "set_vehicle_details", payload: data.result.properties });
-        navigate(`/VehicleDetails`);
-      } else if (type === "planet") {
-        dispatch({ type: "set_planet_details", payload: data.result.properties });
-        navigate(`/PlanetDetails`);
-      }
+        navigate(`/dashboard`);
+      } 
 
     } catch (error) {
       console.error("Error data:", error);
+      
     }
   };
 
@@ -126,7 +121,7 @@ const Trainer = () => {
     dispatch({ type: "del_fav", payload: uid })
   };
 
-  // para people
+  
   useEffect(() => {
     const getPeople = async () => {
       try {
@@ -153,25 +148,29 @@ const Trainer = () => {
 
   return (
     <div>
-      <h1>Clientes</h1>
-      {/* <button onClick={() => handlerMovePeople('prev')}>Previos</button>
-                <button onClick={() => handlerMovePeople('sig')}>Siguientes</button> */}
+      <h1>Hola: {
+        store.current_user.name && store.current_user.name
+        }</h1><br /><h4>A quien quieres acompañar</h4><br />
+      
       <div className="cards-container">
-        {console.log("STORE:", store)}
+        {/* {console.log("STORE:", store)} */}
         {
-          store.data_people?.results?.length > 0 &&
-          store.data_people.results.map((ele) => {
+          store.data_people?.users?.length > 0 &&
+          store.data_people.users
+          .filter(ele => (ele.role || "").toLowerCase() === "client")
+          .map((ele) => {
             return (
               <div className="card" style={{ width: "18rem" }} key={ele.uid}>
                 <img src="https://placehold.org/400x200/000000/ffffff" className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h5 className="card-title">{ele.name}</h5>
-                  <div className="botones cards">
-                    <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.url, "people")} >Learn More!!</a>
-                    <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a>
+                  <h5 className="card-title">{ele.email}</h5>
+                  <h5 className="card-title">{ele.role}</h5>
+                  <div className="botones-cards">
+                    <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.id, "people")} >Revisar datos cliente</a>
+                    {/* <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a> */}
                   </div>
                 </div>
-
               </div>
             );
           })

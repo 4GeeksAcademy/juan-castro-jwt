@@ -9,26 +9,26 @@ const Dashboard = ()=> {
     
 const {store, dispatch} = useGlobalReducer()
     const [user, setUser] = useState("")
-    // useEffect(()=>{
-    //     const getRestricted = async ()=> {
-    //         try {
-    //             const response = await fetch("https://symmetrical-space-dollop-4jg7j5xxgxr376jr-3001.app.github.dev/api/restringido",{
-    //                 headers:{
-    //                     "Content-Type": "application/json",
-    //                     "Authorization": `Bearer ${localStorage.getItem("access_token")}`
-    //                 }
-    //             })
-    //         let data = await response.json()
-    //         if (data) {
-    //             console.log("ESTA ES LA DATA",data.user)
-    //             setUser(data.user)
-    //         }
-    //         } catch (error) {
-    //            console.error(error) 
-    //         }
-    //     }
-    //     getRestricted()
-    // },[])
+    useEffect(()=>{
+        const getRestricted = async ()=> {
+            try {
+                const response = await fetch("https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/hello",{
+                    headers:{
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+                    }
+                })
+            let data = await response.json()
+            if (data) {
+                console.log("ESTA ES LA DATA",data.user)
+                setUser(data.user)
+            }
+            } catch (error) {
+               console.error(error) 
+            }
+        }
+        getRestricted()
+    },[])
 
    return(
      <div>

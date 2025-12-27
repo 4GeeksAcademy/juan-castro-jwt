@@ -1,8 +1,12 @@
+import { use } from "react";
+
 export const initialStore=()=>{
   return{
     message: null,
     current_user:{},
     people_list: [],
+    data_exercises:[],
+    data_user:[],
     todos: [
       {
         id: 1,
@@ -50,6 +54,15 @@ export default function storeReducer(store, action = {}) {
     
      case "data_people":
       return { ...store, data_people: action.payload };
+
+    case "data_exercises":
+      return { ...store, data_exercises: action.payload };
+
+    case "set_people_details":
+      return { ...store, data_user: action.payload };
+
+    case "data_user":
+      return { ...store, data_user: action.payload };
 
     default:
       throw Error('Unknown action.');
