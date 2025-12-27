@@ -12,8 +12,13 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import  JWTManager
+from flask_jtw_extended import jwt_required
+from flask import Blueprint, request, jsonify 
+from api.models import db, User
 
 # from models import Person
+
+api = Blueprint('api', __name__)
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
