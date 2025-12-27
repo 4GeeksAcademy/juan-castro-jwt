@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Navbar } from '../components/Navbar.jsx';
 
