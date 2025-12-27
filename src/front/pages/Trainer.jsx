@@ -1,5 +1,5 @@
-import React from "react";
-export const Trainer = () => <div>Vista de Trainer</div>;import React from "react";
+import React, { useEffect } from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Trainer = () => {

@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '../components/Navbar.jsx';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [formData, setFormData] = useState({ name: '', email: '', role: 'client' });
+    const [currentUser] = useState({ id: 1, name: 'Admin User', role: 'admin' });
+
+
+    //Cargar los usuarios del back 
+    useEffect(() => {
+        fetch('/api/users', { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } })
+            .then(res => res.json())
+            .then(data => setUsers(data))
+            .catch(error => console.error(error))
+    }, []);
 
     const handleCreateClick = () => {
         setEditingUser({});
@@ -21,20 +31,56 @@ const AdminDashboard = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
-        if (editingUser && editingUser.id) {
-            const updatedUsers = users.map(u => (u.id === editingUser.id ? { ...u, ...formData } : u));
-            setUsers(updatedUsers);
-        } else {
-            const newUser = { ...formData, id: Date.now() };
-            setUsers([...users, newUser]);
+        const token = localStorage.getItem('token');
+
+        try {
+            if (editingUser && editingUser.id) {
+                const response = await fetch(`/api/users/${editingUser.id}`, {
+                    method: 'PUT',
+                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    setUsers(users.map(u => (u.id === editingUser.id ? { ...u, ...formData } : u)));
+                    alert('Usuario actualizado');
+                }
+            } else {
+                const response = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    const newUser = await response.json();
+                    const id = (newUser && newUser.id) ? newUser.id : Date.now();
+                    setUsers(prev => [...prev, { ...formData, id }]);
+                    alert('Usuario creado');
+                } else {
+                    console.error('Creación de usuario falló:', response.status, response.statusText);
+                    const tempId = Date.now();
+                    setUsers(prev => [...prev, { ...formData, id: tempId }]);
+                    alert('Usuario añadido localmente');
+                }
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error al guardar usuario');
         }
+
         setEditingUser(null);
-        alert('Usuario guardado');
     };
 
     const handleCancel = () => setEditingUser(null);
+
+    const handleDeleteUser = (userId) => {
+        if (window.confirm('Estás seguro que deseas eliminar este usuario?')) {
+            setUsers(users.filter(user => user.id !== userId));
+            alert('Usuario Eliminado');
+            setEditingUser(null);
+        }
+    };
 
     return (
         <div className='container mt-5'>
@@ -46,7 +92,7 @@ const AdminDashboard = () => {
                     <div className='d-flex justify-content-between align-items-center mb-3'>
                         <h4>Lista de Usuarios</h4>
                         <button className='btn btn-success' onClick={handleCreateClick}>
-                            + Nuevo usuario
+                            Nuevo usuario
                         </button>
                     </div>
 
@@ -127,8 +173,22 @@ const AdminDashboard = () => {
                         </div>
 
                         <div className='d-flex justify-content-between'>
-                            <button type='button' className='btn btn-secondary' onClick={handleCancel}>Cancelar</button>
-                            <button type='submit' className='btn btn-primary'>Guardar Cambios</button>
+                            <button type='button' className='btn btn-secondary'
+                                onClick={handleCancel}>Cancelar</button>
+
+                            <div>
+                                {currentUser.role === 'admin' && editingUser?.id && (
+                                    <button
+                                        type='button'
+                                        className='btn btn-danger me-2'
+                                        onClick={() => handleDeleteUser(editingUser.id)}>
+                                        Eliminar Usuario
+                                    </button>
+                                )}
+                                <button type='submit' className='btn btn-primary'>
+                                    Guardar Cambios
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
