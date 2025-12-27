@@ -58,6 +58,9 @@ export default function storeReducer(store, action = {}) {
     case "data_exercises":
       return { ...store, data_exercises: action.payload };
 
+    case "set_people_details":
+      return { ...store, data_user: action.payload };
+
     case "data_user":
       return { ...store, data_user: action.payload };
 

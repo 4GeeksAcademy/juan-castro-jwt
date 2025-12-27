@@ -18,16 +18,11 @@ const Trainer = () => {
       if (type === "people") {
         dispatch({ type: "set_people_details", payload: data.result.properties });
         navigate(`/dashboard`);
-      } else if (type === "vehicle") {
-        dispatch({ type: "set_vehicle_details", payload: data.result.properties });
-        navigate(`/VehicleDetails`);
-      } else if (type === "planet") {
-        dispatch({ type: "set_planet_details", payload: data.result.properties });
-        navigate(`/PlanetDetails`);
-      }
+      } 
 
     } catch (error) {
       console.error("Error data:", error);
+      
     }
   };
 
@@ -158,7 +153,7 @@ const Trainer = () => {
         }</h1><br /><h4>A quien quieres acompañar</h4><br />
       
       <div className="cards-container">
-        {console.log("STORE:", store)}
+        {/* {console.log("STORE:", store)} */}
         {
           store.data_people?.users?.length > 0 &&
           store.data_people.users
