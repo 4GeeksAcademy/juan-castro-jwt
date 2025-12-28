@@ -26,89 +26,6 @@ const Trainer = () => {
     }
   };
 
-  const handlerMovePeople = async (que) => {
-    try {
-      let url = "";
-      if (que === "sig") {
-        if (!store.data_people?.next) {
-          alert("No hay mas paginas Siguientes");
-          return;
-        }
-        url = store.data_people.next;
-      } else {
-        if (!store.data_people?.previous) {
-          alert("No hay mas paginas Anteriores");
-          return;
-        }
-        url = store.data_people.previous;
-      }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      dispatch({ type: "data_people", payload: data });
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlerMovePlanet = async (que) => {
-    try {
-      let url = "";
-      if (que === "sig") {
-        if (!store.data_planet?.next) {
-          alert("No hay mas paginas Siguientes");
-          return;
-        }
-        url = store.data_planet.next;
-      } else {
-        if (!store.data_planet?.previous) {
-          alert("No hay mas paginas Anteriores");
-          return;
-        }
-        url = store.data_planet.previous;
-      }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      dispatch({ type: "data_planet", payload: data });
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlerMoveVehicle = async (que) => {
-    try {
-      let url = "";
-      if (que === "sig") {
-        if (!store.data_vehicle?.next) {
-          alert("No hay mas paginas Siguientes");
-          return;
-        }
-        url = store.data_vehicle.next;
-      } else {
-        if (!store.data_vehicle?.previous) {
-          alert("No hay mas paginas Anteriores");
-          return;
-        }
-        url = store.data_vehicle.previous;
-      }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      dispatch({ type: "data_vehicle", payload: data });
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handlerFav = (elemento) => {
     let encontrado = store.fav_list.find((ele) => ele.uid === elemento.uid)
@@ -161,7 +78,7 @@ const Trainer = () => {
           .map((ele) => {
             return (
               <div className="card" style={{ width: "18rem" }} key={ele.uid}>
-                <img src="https://placehold.org/400x200/000000/ffffff" className="card-img-top" alt="..." />
+                <img src="https://placedog.net/500/280/sepia?r" className="card-img-top" alt="..." />
                 <div className="card-body">
                   <h5 className="card-title">{ele.name}</h5>
                   <h5 className="card-title">{ele.email}</h5>

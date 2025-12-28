@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import { Navbar } from '../components/Navbar.jsx';
+
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
@@ -10,15 +10,28 @@ const AdminDashboard = () => {
 
 
     //Cargar los usuarios del back 
+    const BACKEND = (import.meta && import.meta.env && import.meta.env.VITE_BACKEND_URL)
+        ? import.meta.env.VITE_BACKEND_URL.replace(/\/$/, '')
+        : '';
+
     useEffect(() => {
-        fetch('/api/users', { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } })
-            .then(res => res.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error(error))
+        const url = BACKEND ? `${BACKEND}/api/users` : '/api/users';
+        fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+            .then(async res => {
+                const text = await res.text();
+                try {
+                    const data = JSON.parse(text);
+                    setUsers(Array.isArray(data) ? data : (data.users || []));
+                } catch (err) {
+                    console.error('Respuesta inválida al pedir usuarios:', text);
+                    setUsers([]);
+                }
+            })
+            .catch(error => console.error(error));
     }, []);
 
 
-    
+
     const handleCreateClick = () => {
         setEditingUser({});
         setFormData({ name: '', email: '', role: 'client' });
@@ -40,7 +53,8 @@ const AdminDashboard = () => {
 
         try {
             if (editingUser && editingUser.id) {
-                const response = await fetch(`/api/users/${editingUser.id}`, {
+                const url = BACKEND ? `${BACKEND}/api/users/${editingUser.id}` : `/api/users/${editingUser.id}`;
+                const response = await fetch(url, {
                     method: 'PUT',
                     headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify(formData)
@@ -50,7 +64,8 @@ const AdminDashboard = () => {
                     alert('Usuario actualizado');
                 }
             } else {
-                const response = await fetch('/api/users', {
+                const url = BACKEND ? `${BACKEND}/api/users` : '/api/users';
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'content-type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify(formData)
