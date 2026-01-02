@@ -6,22 +6,30 @@ from sqlalchemy.orm import Mapped, mapped_column
 db = SQLAlchemy()
 
 class User(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(120),nullable=False)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-    role: Mapped[str] = mapped_column(String(10), nullable=False, default="client")
-    def set_role(self,role:str):
-        if role not in("adm","client","trainer"):
-            raise ValueError("role invalido" )
-        self.role = role
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(String(100), nullable=False)
+    email = db.Column(String(120), unique=True, nullable=False)
+    password = db.Column(String(120), nullable=False)
+    is_active = db.Column(Boolean(), nullable=False)
+    role = db.Column(String(50), nullable=False, default="client")
+
+    altura = db.Column(String(120))
+    peso = db.Column(String(20))
+    rutina =  db.Column(String(50))
+    observaciones = db.Column(String(200))
+    estado = db.Column(String(50))
 
     def serialize(self):
-        return {
-            "name": self.name,
-            "id": self.id,
-            "email": self.email,
-            "role": self.role
-            # do not serialize the password, its a security breach
+        return{
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'role': self.role,
+            'altura': self.altura,
+            'peso': self.peso,
+            'rutina': self.rutina,
+            'observaciones': self.observaciones,
+            'estado': self.estado             
         }
+    
+
