@@ -16,7 +16,7 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         const url = BACKEND ? `${BACKEND}/api/users` : '/api/users';
-        fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
             .then(async res => {
                 const text = await res.text();
                 try {
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('acces_token');
 
         try {
             if (editingUser && editingUser.id) {

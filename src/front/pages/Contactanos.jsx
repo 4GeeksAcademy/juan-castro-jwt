@@ -23,7 +23,24 @@ const Contactanos = () => {
     return (
         <div>
             <div className="container dsplay-flex justify-content-center align-items-center"
-                style={{ height: '100vh' }}>
+                style={{ height: '100vh' }}
+                >
+                    <section
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "30px"
+        }}
+      >
+        <img
+          src="https://res.cloudinary.com/drnsgjgvm/image/upload/v1767415480/contacto_pr5hkf.png"
+          alt="Contacto"
+          style={{
+            width: "350px",
+            maxWidth: "100%",
+          }}
+        />
+      </section>
 
                 <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '500px' }}>
                     <div className="mb-3">

@@ -1,102 +1,111 @@
-import React, { useEffect } from "react";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import ClientDetailForm from "./ClientDetailsForm";
 
 const Trainer = () => {
-  const { store, dispatch } = useGlobalReducer();
-  const navigate = useNavigate();
+  const [clients, setClients] = useState([]);
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const handlerGoToDetails = async (url, type) => {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      data.result.properties
-      console.log(data);
-      if (type === "people") {
-        dispatch({ type: "set_people_details", payload: data.result.properties });
-        navigate(`/dashboard`);
-      } 
+  const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
-    } catch (error) {
-      console.error("Error data:", error);
-      
-    }
-  };
-
-
-  const handlerFav = (elemento) => {
-    let encontrado = store.fav_list.find((ele) => ele.uid === elemento.uid)
-    if (encontrado)
-      return
-    dispatch({ type: "add_to_favorites", payload: elemento })
-  };
-
-  const handlerDelFav = (uid) => {
-    dispatch({ type: "del_fav", payload: uid })
-  };
-
-  
   useEffect(() => {
-    const getPeople = async () => {
-      try {
-        const response = await fetch("https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/hello");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        data.results
+    fetchClients();
+  }, []);
 
-        dispatch({ type: "save_people_list", payload: data.results });
-        dispatch({ type: "data_people", payload: data });
-        console.log(data);
+  const fetchClients = async () => {
+    const token = localStorage.getItem("access_token");
 
-
-      } catch (error) {
-        console.error("Error data:", error);
+    const res = await fetch(`${BACKEND}/api/clients`, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    };
-    getPeople();
+    });
 
-  }
-    , []);
+    const data = await res.json();
+    setClients(data);
+    setLoading(false);
+  };
+
+  const handleSave = async (formData) => {
+    const token = localStorage.getItem("access_token");
+
+    const url = isCreating
+      ? `${BACKEND}/api/clients`
+      : `${BACKEND}/api/clients/${selectedClient.id}`;
+
+    const method = isCreating ? "POST" : "PUT";
+
+    const res = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const updated = await res.json();
+
+    if (isCreating) {
+      setClients(prev => [...prev, updated]);
+    } else {
+      setClients(prev =>
+        prev.map(c => (c.id === updated.id ? updated : c))
+      );
+    }
+
+    setSelectedClient(updated);
+    setIsCreating(false);
+  };
+
+  if (loading) return <p className="text-center mt-5">Cargando clientes...</p>;
 
   return (
-    <div>
-      <h1>Hola: {
-        store.current_user.name && store.current_user.name
-        }</h1><br /><h4>A quien quieres acompañar</h4><br />
-      
-      <div className="cards-container">
-        {/* {console.log("STORE:", store)} */}
-        {
-          store.data_people?.users?.length > 0 &&
-          store.data_people.users
-          .filter(ele => (ele.role || "").toLowerCase() === "client")
-          .map((ele) => {
-            return (
-              <div className="card" style={{ width: "18rem" }} key={ele.uid}>
-                <img src="https://placedog.net/500/280/sepia?r" className="card-img-top" alt="..." />
-                <div className="card-body">
-                  <h5 className="card-title">{ele.name}</h5>
-                  <h5 className="card-title">{ele.email}</h5>
-                  <h5 className="card-title">{ele.role}</h5>
-                  <div className="botones-cards">
-                    <a href="#" className="btn btn-primary" onClick={() => handlerGoToDetails(ele.id, "people")} >Revisar datos cliente</a>
-                    {/* <a href="#" className="btn btn-danger" onClick={() => handlerFav(ele)} ><i className="fa-solid fa-heart"></i></a> */}
-                  </div>
-                </div>
-              </div>
-            );
-          })
+    <div className="container mt-4">
+      <div className="row">
 
-        }
+        <div className="col-md-4">
+          <div className="list-group">
+            <button
+              className="list-group-item list-group-item-action text-success"
+              onClick={() => {
+                setSelectedClient(null);
+                setIsCreating(true);
+              }}
+            >
+              ➕ Nuevo Cliente
+            </button>
+
+            {clients.map(client => (
+              <button
+                key={client.id}
+                className={`list-group-item list-group-item-action ${
+                  selectedClient?.id === client.id ? "active" : ""
+                }`}
+                onClick={() => {
+                  setSelectedClient(client);
+                  setIsCreating(false);
+                }}
+              >
+                {client.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="col-md-8">
+          <ClientDetailForm
+            client={selectedClient}
+            isCreating={isCreating}
+            onSave={handleSave}
+            onCancelCreate={() => setIsCreating(false)}
+          />
+        </div>
+
       </div>
     </div>
   );
-
 };
 
 export default Trainer;
