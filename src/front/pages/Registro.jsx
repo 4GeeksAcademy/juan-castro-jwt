@@ -23,7 +23,7 @@ const Registro = () => {
         try {
             setLoading(true);
             const response = await fetch(
-                "https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/create_user",
+                "https://legendary-spoon-xjv5ppjxwv5hpgwq-3001.app.github.dev/api/create_user",
                 {
                     method: "POST",
                     body: JSON.stringify(payload),
