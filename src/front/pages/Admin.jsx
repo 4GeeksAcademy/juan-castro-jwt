@@ -25,7 +25,7 @@ const Admin = () => {
          } catch (error) {
             console.error("Error data:", error);
             setLoading(false);
-            
+
          }
       };
 
@@ -44,6 +44,15 @@ const Admin = () => {
          <div className="cards-container">
             {exercises.map((ele) => (
                <div className="card" style={{ width: "18rem" }} key={ele.id || ele.uid || ele.name}>
+                  <div className="card">
+                     <h5 className="card-header">{ele.name}</h5>
+                     <div className="card-body">
+                        <h5 className="card-title">Special title treatment</h5>
+                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                     </div>
+                  </div>
+                  
                   <img
                      src={ele.gifUrl || ele.image || ele.imageUrl || ""}
                      className="card-img-top"
@@ -53,8 +62,17 @@ const Admin = () => {
                      <h5 className="card-title">{ele.name}</h5>
                      <p className="card-text">{ele.bodyPart || ele.target || ""}</p>
                   </div>
-               </div>
+                  <div className="card">
+                     <h5 className="card-header">{ele.name}</h5>
+                     <div className="card-body">
+                        <h5 className="card-title">Special title treatment</h5>
+                        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                     </div>
+                  </div>
+               </div>               
             ))}
+            
          </div>
       </div>
    );
