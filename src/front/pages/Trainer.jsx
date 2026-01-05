@@ -31,7 +31,7 @@ const Trainer = () => {
     const token = localStorage.getItem("access_token");
 
     const url = isCreating
-      ? `${BACKEND}/api/clients`
+      ? `${BACKEND}/api/users`
       : `${BACKEND}/api/clients/${selectedClient.id}`;
 
     const method = isCreating ? "POST" : "PUT";
@@ -80,9 +80,8 @@ const Trainer = () => {
             {clients.map(client => (
               <button
                 key={client.id}
-                className={`list-group-item list-group-item-action ${
-                  selectedClient?.id === client.id ? "active" : ""
-                }`}
+                className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
+                  }`}
                 onClick={() => {
                   setSelectedClient(client);
                   setIsCreating(false);

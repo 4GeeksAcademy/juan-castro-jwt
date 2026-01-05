@@ -36,7 +36,7 @@ class Client(db.Model):
     peso = db.Column(String(20))
     rutina = db.Column(String(50))
     observaciones = db.Column(String(200))
-    estado = db.Column(String(50))
+    estado = db.Column(String(50), default="Desactivado")
 
     user = relationship("User", back_populates="client")
 

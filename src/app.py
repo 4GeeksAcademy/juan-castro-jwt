@@ -11,7 +11,7 @@ from flask_jwt_extended import JWTManager
 
 from api.utils import APIException, generate_sitemap
 from api.models import db
-from api.routes import api
+from api.routes import api, bp
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -70,6 +70,8 @@ setup_commands(app)
 # BLUEPRINT
 # ---------------------------------------------------
 app.register_blueprint(api, url_prefix="/api")
+# Registrar blueprint proxy para exponer endpoints que usan claves de terceros desde el backend
+app.register_blueprint(bp)
 
 # ---------------------------------------------------
 # ERROR HANDLER

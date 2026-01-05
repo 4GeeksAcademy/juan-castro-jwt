@@ -1,3 +1,4 @@
+import os, requests
 from flask import request, jsonify, Blueprint
 from api.models import db, User, Client
 from flask_cors import CORS
@@ -16,9 +17,19 @@ CORS(api)
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
+bp = Blueprint('proxy', __name__)
+API_KEY = os.environ.get("pQDWlmO/0jHgvcAmV248Yg==TodGM6ejKu9TnPXt")
+
+@bp.route("/api/exercises")
+def exercises():
+    r = requests.get("https://api.api-ninjas.com/v1/exercises",
+                     headers={"X-Api-Key": API_KEY}, timeout=10)
+    return jsonify(r.json()), r.status_code
+
 # -----------------------
 # Crear un nuevo user
 # -----------------------
+
 
 @api.route("/create_user", methods=["POST"])
 def create_user():
@@ -72,6 +83,7 @@ def create_user():
 # -----------------------
 # AUTH
 # -----------------------
+
 
 @api.route("/login", methods=["POST"])
 def login():
@@ -141,16 +153,45 @@ def create_client():
     data = request.get_json()
     if not data:
         return jsonify({"msg": "No data"}), 400
+    user = None
 
-    user = User(
-        name=data["name"],
-        email=data["email"],
-        password=bcrypt.generate_password_hash(data["password"]).decode("utf-8"),
-        role="client"
-    )
-    db.session.add(user)
-    db.session.commit()
+    # Si nos pasan user_id, enlazamos ese usuario existente
+    user_id = data.get("user_id")
+    if user_id:
+        user = User.query.get(int(user_id))
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+        # Evitar duplicar perfil de cliente
+        existing = Client.query.filter_by(user_id=user.id).first()
+        if existing:
+            return jsonify({"msg": "Cliente ya existe para ese usuario"}), 400
+        # Asegurar que el role sea 'client'
+        if user.role != "client":
+            user.role = "client"
+            db.session.commit()
+    else:
+        # Crear un nuevo usuario (se requieren name, email y password)
+        name = data.get("name")
+        email = data.get("email")
+        password = data.get("password")
+        if not name or not email or not password:
+            return jsonify({"msg": "Faltan campos para crear el usuario (name, email, password)"}), 400
 
+        # verificar si el email ya existe
+        busqueda = User.query.filter_by(email=email).first()
+        if busqueda:
+            return jsonify({"msg": "Este email ya existe"}), 400
+
+        user = User(
+            name=name,
+            email=email,
+            password=bcrypt.generate_password_hash(password).decode("utf-8"),
+            role="client"
+        )
+        db.session.add(user)
+        db.session.commit()
+
+    # Crear perfil de cliente vinculado al user.id
     client = Client(
         user_id=user.id,
         altura=data.get("altura"),
