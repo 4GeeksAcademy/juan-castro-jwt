@@ -18,7 +18,7 @@ bcrypt = Bcrypt()
 jwt = JWTManager()
 
 bp = Blueprint('proxy', __name__)
-API_KEY = os.environ.get("pQDWlmO/0jHgvcAmV248Yg==TodGM6ejKu9TnPXt")
+API_KEY = os.environ.get("API_KEY_EXERCISES")
 
 @bp.route("/api/exercises")
 def exercises():
@@ -33,12 +33,6 @@ def exercises():
 
 @api.route("/create_user", methods=["POST"])
 def create_user():
-
-# --------------------------------------------------
-# AUTH
-# --------------------------------------------------
-@api.route("/login", methods=["POST"])
-def login():
     data = request.get_json()
 
     if not data:
