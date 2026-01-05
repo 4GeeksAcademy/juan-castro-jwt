@@ -8,11 +8,11 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 const Admin = () => {
    const { store, dispatch } = useGlobalReducer();
    const [loading, setLoading] = useState(true);
-
+   const BACKEND = import.meta.env.VITE_BACKEND_URL;
    useEffect(() => {
       const getExercises = async () => {
          try {
-            const response = await fetch("https://exercisedb.p.rapidapi.com/exercises/targetList");
+            const response = await fetch(`${BACKEND}/api/exercises`);
             if (!response.ok) {
                throw new Error(`HTTP error! status: ${response.status}`);
             }

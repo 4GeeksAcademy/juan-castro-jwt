@@ -41,6 +41,9 @@ export const Navbar = () => {
                          <li className="nav-item">
                             <Link className="nav-link active" to="/ejercicios">ejercicios</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link active" to="/perfil">Mi perfil</Link>
+                        </li>
 
                     </ul>
 
