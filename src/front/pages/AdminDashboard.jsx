@@ -16,7 +16,7 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         const url = BACKEND ? `${BACKEND}/api/users` : '/api/users';
-        fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        fetch(url, { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } })
             .then(async res => {
                 const text = await res.text();
                 try {
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('acces_token');
 
         try {
             if (editingUser && editingUser.id) {
@@ -129,7 +129,51 @@ const AdminDashboard = () => {
                                     <td>{user.email}</td>
                                     <td>
                                         <span className={
-                                            user.role === 'admin' ? 'badge bg-primary' :
+                                            user.role === 'adm' ? 'badge bg-primary' :
+                                                user.role === 'trainer' ? 'badge bg-warning text-dark' :
+                                                    'badge bg-success'
+                                        }>
+                                            {user.role}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button
+                                            className='btn btn-outline-primary btn-sm me-2'
+                                            onClick={() => handleEditClick(user)}
+                                        >
+                                            Editar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <br />
+                    
+                    <div className='d-flex justify-content-between align-items-center mb-3'>
+                        <h4>Lista de Clientes</h4>
+                        <button className='btn btn-success' onClick={handleCreateClick}>
+                            Nuevo cliente
+                        </button>
+                    </div>
+
+                    <table className='table table-striped table-bordered'>
+                        <thead className='thead-dark'>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user.id}>
+                                    <td>{user.name}</td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        <span className={
+                                            user.role === 'adm' ? 'badge bg-primary' :
                                                 user.role === 'trainer' ? 'badge bg-warning text-dark' :
                                                     'badge bg-success'
                                         }>

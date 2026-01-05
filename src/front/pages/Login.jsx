@@ -19,7 +19,7 @@ const Login = () => {
             setLoading(true);
 
             const response = await fetch(
-                "https://supreme-spork-4xwjvvx6qwg3j6q7-3001.app.github.dev/api/login",
+                "https://legendary-spoon-xjv5ppjxwv5hpgwq-3001.app.github.dev/api/login",
                 {
                     method: "POST",
                     body: JSON.stringify({
@@ -44,7 +44,7 @@ const Login = () => {
                 const roleRouteMap = {
                     adm: "/admin",
                     trainer: "/trainer",                    
-                    client: "/dashboard"
+                    client: "/perfil"
                 };
                 const destination = role ? (roleRouteMap[role] || "/dashboard") : "/dashboard";
                 navigate(destination);
