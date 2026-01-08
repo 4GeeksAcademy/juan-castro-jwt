@@ -7,12 +7,12 @@
   padding: 1rem 1.5rem;
 }
 
-/* Brand */
+
 .custom-navbar .navbar-brand {
   font-family: "Pacifico", cursive;
   font-size: 32px;
   color: #ffffff !important;
-  font-weight: 400; /* Pacifico no necesita bold */
+  font-weight: 400; 
   letter-spacing: 1px;
 }
 

@@ -24,24 +24,24 @@
 .admin-container .btn {
   font-family: var(--font-title);
   letter-spacing: 1px;
-  border-radius: 8px;                   /* Cambiado de 0 a 8px para un look más moderno */
+  border-radius: 8px;                  
   padding: 0.6rem 1.5rem;
 }
 
 .admin-container .btn-success {
-  background-color: var(--green-neon); /* Fondo sólido neón */
+  background-color: var(--green-neon); 
   border: 1.5px solid var(--green-neon);
-  color: var(--black-primary);          /* Texto oscuro para máximo contraste */
-  font-weight: 800;                     /* Texto más grueso para que resalte */
+  color: var(--black-primary);          
+  font-weight: 800;                     
   transition: all 0.3s ease;
-  text-transform: uppercase;            /* Refuerza el estilo deportivo */
+  text-transform: uppercase;            
 }
 
 .admin-container .btn-success:hover {
-  background-color: #ccff00;            /* Un verde ligeramente más brillante al pasar el mouse */
+  background-color: #ccff00;            
   color: var(--black-primary);
-  box-shadow: 0 0 20px rgba(180, 255, 0, 0.6); /* Efecto de resplandor neón */
-  transform: translateY(-2px);          /* Pequeño salto al pasar el mouse */
+  box-shadow: 0 0 20px rgba(180, 255, 0, 0.6); 
+  transform: translateY(-2px);          
 }
 
 .admin-container .btn-primary {
