@@ -14,6 +14,7 @@ class User(db.Model):
     password = db.Column(String(120), nullable=False)
     is_active = db.Column(Boolean(), default=True)
     role = db.Column(String(50), nullable=False, default="client")
+    estado = db.Column(String(50), default="Desactivado")
 
     client = relationship("Client", back_populates="user", uselist=False)
 
@@ -22,7 +23,8 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "email": self.email,
-            "role": self.role
+            "role": self.role,
+            "estado": self.estado
         }
 
 
@@ -36,7 +38,6 @@ class Client(db.Model):
     peso = db.Column(String(20))
     rutina = db.Column(String(50))
     observaciones = db.Column(String(200))
-    estado = db.Column(String(50), default="Desactivado")
 
     user = relationship("User", back_populates="client")
 
@@ -50,5 +51,5 @@ class Client(db.Model):
             "peso": self.peso,
             "rutina": self.rutina,
             "observaciones": self.observaciones,
-            "estado": self.estado
+            
         }

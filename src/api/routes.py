@@ -34,7 +34,7 @@ def exercises():
 @api.route("/create_user", methods=["POST"])
 def create_user():
     data = request.get_json()
-
+    print("Received data for new user:", data)  # Debug print
     if not data:
         return jsonify({"msg": "No data"}), 400
 
@@ -42,15 +42,15 @@ def create_user():
     password = data.get("password")
 
     user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"msg": "Usuario no existe"}), 404
-
-    if not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"msg": "Credenciales incorrectas"}), 401
-
-    access_token = create_access_token(
-        identity=str(user.id),
-        expires_delta=timedelta(minutes=30)
+    if user:
+        return jsonify({"msg": "Usuario ya existe"}), 404
+    
+    new_user = User(
+        name=data.get("name"),
+        email=email,
+        password=bcrypt.generate_password_hash(password).decode("utf-8"),
+        role=data.get("role", "client"),
+        estado=data.get("estado", "Desactivado")
     )
 
     # anexarlo a la sesion
@@ -101,6 +101,22 @@ def get_users():
     users = User.query.all()
     return jsonify([u.serialize() for u in users]), 200
 
+@api.route("/users/<int:user_id>", methods=["PUT"])
+@jwt_required()
+def update_user(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    data = request.get_json()
+    user.name = data.get("name")
+    user.email = data.get("email")
+    user.role = data.get("role")
+    user.estado = data.get("estado")
+
+    db.session.commit()
+    return jsonify(user.serialize()), 200
+ 
 
 # -----------------------
 # CLIENT PROFILE (CLIENT)
@@ -200,7 +216,7 @@ def update_client(client_id):
     client.peso = data.get("peso")
     client.rutina = data.get("rutina")
     client.observaciones = data.get("observaciones")
-    client.estado = data.get("estado")
+    
 
     db.session.commit()
     return jsonify(client.serialize()), 200
