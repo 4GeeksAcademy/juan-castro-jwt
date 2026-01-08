@@ -1,0 +1,144 @@
+
+.admin-container {
+  max-width: 1200px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+}
+
+/* titulos */
+.admin-container h2 {
+  font-family: var(--font-title);
+  color: var(--green-neon);
+  letter-spacing: 3px;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.admin-container h4 {
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  color: var(--white);
+}
+
+
+.admin-container .btn {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  border-radius: 8px;                   /* Cambiado de 0 a 8px para un look más moderno */
+  padding: 0.6rem 1.5rem;
+}
+
+.admin-container .btn-success {
+  background-color: var(--green-neon); /* Fondo sólido neón */
+  border: 1.5px solid var(--green-neon);
+  color: var(--black-primary);          /* Texto oscuro para máximo contraste */
+  font-weight: 800;                     /* Texto más grueso para que resalte */
+  transition: all 0.3s ease;
+  text-transform: uppercase;            /* Refuerza el estilo deportivo */
+}
+
+.admin-container .btn-success:hover {
+  background-color: #ccff00;            /* Un verde ligeramente más brillante al pasar el mouse */
+  color: var(--black-primary);
+  box-shadow: 0 0 20px rgba(180, 255, 0, 0.6); /* Efecto de resplandor neón */
+  transform: translateY(-2px);          /* Pequeño salto al pasar el mouse */
+}
+
+.admin-container .btn-primary {
+  background-color: transparent;
+  border: 1.5px solid var(--white);
+  color: var(--white);
+}
+
+.admin-container .btn-primary:hover {
+  background-color: var(--white);
+  color: var(--black-primary);
+}
+
+.admin-container .btn-danger {
+  background-color: transparent;
+  border: 1.5px solid #ff4d4d;
+  color: #ff4d4d;
+}
+
+.admin-container .btn-danger:hover {
+  background-color: #ff4d4d;
+  color: var(--black-primary);
+}
+
+
+.admin-container table {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  color: var(--white);
+}
+
+.admin-container thead {
+  background-color: var(--black-primary);
+}
+
+.admin-container th {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  color: #000000 !important; 
+  color: var(--green-neon);
+  border-bottom: 1.5px solid var(--green-neon);
+}
+
+.admin-container td {
+  color: var(--gray-light);
+}
+
+
+.admin-container .badge {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+}
+
+.badge.bg-primary {
+  background-color: var(--green-neon) !important;
+  color: var(--black-primary);
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: var(--black-primary);
+}
+
+.badge.bg-success {
+  background-color: #4caf50 !important;
+  color: var(--black-primary);
+}
+
+
+.admin-container .card {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 18px;
+}
+
+
+.admin-container input,
+.admin-container select {
+  background-color: transparent;
+  border: 1.5px solid var(--gray-medium);
+  color: var(--white);
+}
+
+.admin-container input:focus,
+.admin-container select:focus {
+  outline: none;
+  border-color: var(--green-neon);
+  box-shadow: none;
+}
+
+
+@media (max-width: 768px) {
+  .admin-container {
+    margin: 4rem auto;
+  }
+
+  .admin-container h2 {
+    font-size: 2.2rem;
+  }
+}

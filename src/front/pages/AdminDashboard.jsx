@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import "./AdminDashboard.css";
 
 
 const AdminDashboard = () => {
@@ -101,8 +102,8 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className='container mt-5'>
-            <h2 className='mb-4'>Panel de Administración</h2>
+        <div className='admin-container container mt-5'>
+            <h2 className='mb-4'>Panel de administración</h2>
 
             {!editingUser ? (
                 <div className='table-view'>

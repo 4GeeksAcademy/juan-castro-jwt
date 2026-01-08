@@ -1,0 +1,170 @@
+/* =========================
+   GOOGLE FONTS
+========================= */
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap");
+
+/* =========================
+   VARIABLES GLOBALES
+========================= */
+:root {
+  /* Colores */
+  --black-primary: #0b0b0b;
+  --black-soft: #121212;
+
+  --green-neon: #9aff00;
+  --green-olive: #7fae2e;
+
+  --white: #ffffff;
+  --gray-light: #dcdcdc;
+  --gray-medium: #a0a0a0;
+
+  /* Tipografía */
+  --font-title: "Bebas Neue", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Bordes */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* Transiciones */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+}
+
+/* =========================
+   RESET BÁSICO
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   BODY
+========================= */
+body {
+  font-family: var(--font-body);
+  background-color: var(--black-primary);
+  color: var(--white);
+  line-height: 1.6;
+}
+
+/* =========================
+   TIPOGRAFÍA GLOBAL
+========================= */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+p {
+  color: var(--gray-light);
+  font-size: 1rem;
+}
+
+/* =========================
+   LINKS
+========================= */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+   SECCIONES
+========================= */
+.section {
+  padding: 5rem 2rem;
+}
+
+/* =========================
+   CONTENEDORES
+========================= */
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================
+   BOTONES BASE
+========================= */
+.btn-neon {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border: 2px solid var(--green-neon);
+  color: var(--white);
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.btn-neon:hover {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+}
+
+/* =========================
+   CARDS BASE
+========================= */
+.card-dark {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+}
+
+/* =========================
+   IMÁGENES CON OVERLAY
+========================= */
+.bg-image {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.bg-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+}
+
+.bg-image > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   SCROLLBAR (opcional)
+========================= */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--green-neon);
+  border-radius: 10px;
+}
+
+/* =========================
+   RESPONSIVE BASE
+========================= */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1.5rem;
+  }
+}
