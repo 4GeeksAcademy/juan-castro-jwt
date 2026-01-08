@@ -16,14 +16,15 @@ const Trainer = () => {
   const fetchClients = async () => {
     const token = localStorage.getItem("access_token");
 
-    const res = await fetch(`${BACKEND}/api/clients`, {
+    const res = await fetch(`${BACKEND}/api/users`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
 
     const data = await res.json();
-    setClients(data);
+    const clientsOnly = Array.isArray(data) ? data.filter(u => u.role === 'client') : [];
+    setClients(clientsOnly);
     setLoading(false);
   };
 

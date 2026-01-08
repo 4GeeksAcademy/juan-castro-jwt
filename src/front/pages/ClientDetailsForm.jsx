@@ -148,12 +148,12 @@ const ClientDetailForm = ({ client, isCreating, onSave, onCancelCreate }) => {
         <option value="Avanzado">Avanzado</option>
       </select>
 
-      <select className="form-select mb-2" name="estado" value={formData.estado} onChange={handleChange}>
+      {/* <select className="form-select mb-2" name="estado" value={formData.estado} onChange={handleChange}>
         <option value="Activo">Activo</option>
         <option value="Inactivo">Inactivo</option>
-      </select>
+      </select> */}
 
-      <textarea className="form-control mb-2" name="observaciones" value={formData.observaciones} onChange={handleChange} />
+      <textarea className="form-control mb-3" name="observaciones" value={formData.observaciones} onChange={handleChange} />
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn btn-primary">{isCreating ? "Crear" : "Guardar"}</button>

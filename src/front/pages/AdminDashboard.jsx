@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const [query, setQuery] = useState('');
     const [editingUser, setEditingUser] = useState(null);
     const [formData, setFormData] = useState({ name: '', email: '', role: 'client', estado: 'Desactivado' });
     const [currentUser] = useState({ id: 1, name: 'Admin User', role: 'admin', estado: '' }); // Simulación de usuario actual, reemplazar con lógica real de autenticación
@@ -98,9 +99,16 @@ const AdminDashboard = () => {
         }
     };
 
-    const filteredUsers = users.filter(u => u.role === 'adm' || u.role === 'trainer');
+    const matches = (u) => {
+        if (!query) return true;
+        const q = query.trim().toLowerCase();
+        return (u.name && u.name.toLowerCase().includes(q)) ||
+               (u.email && u.email.toLowerCase().includes(q)) ||
+               ((u.role || '').toLowerCase().includes(q));
+    };
 
-    const filteredClient = users.filter(u => u.role === 'client');
+    const filteredUsers = users.filter(u => (u.role === 'adm' || u.role === 'trainer') && matches(u));
+    const filteredClient = users.filter(u => u.role === 'client' && matches(u));
 
     return (
         <div className='container mt-5'>
@@ -114,6 +122,13 @@ const AdminDashboard = () => {
                             Nuevo usuario
                         </button> */}
                     </div>
+                    <input
+                        type='text'
+                        className='form-control w-50'
+                        placeholder='Buscar por nombre, email o rol'
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                    /> <br />
 
                     <table className='table table-striped table-bordered'>
                         <thead className='thead-dark'>
@@ -154,11 +169,11 @@ const AdminDashboard = () => {
 
                     <div className='d-flex justify-content-between align-items-center mb-3'>
                         <h4>Lista de Clientes</h4>
-                        <button className='btn btn-success' onClick={handleCreateClick}>
-                            Nuevo cliente
-                        </button>
-                    </div>
 
+                        {/* <button className='btn btn-success' onClick={handleCreateClick}>
+                            Nuevo cliente
+                        </button> */}
+                    </div>
                     <table className='table table-striped table-bordered'>
                         <thead className='thead-dark'>
                             <tr>
