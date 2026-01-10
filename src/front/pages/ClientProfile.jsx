@@ -7,7 +7,7 @@ const ClientProfile = () => {
   useEffect(() => {
     const token = localStorage.getItem("access_token");
 
-    fetch(`${BACKEND}/api/client/profile`, {
+    fetch(`${BACKEND}/api/user/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
