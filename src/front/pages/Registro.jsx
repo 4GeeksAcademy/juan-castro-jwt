@@ -18,8 +18,7 @@ const Registro = () => {
             name,
             email,
             password,
-            role // :apuntando_hacia_la_izquierda: viaja el select
-
+            role 
         };
         try {
             setLoading(true);

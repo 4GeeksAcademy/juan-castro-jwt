@@ -1,0 +1,63 @@
+
+
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+.custom-navbar {
+  background-color: #0f0f0f !important;
+  padding: 1rem 1.5rem;
+}
+
+
+.custom-navbar .navbar-brand {
+  font-family: "Pacifico", cursive;
+  font-size: 32px;
+  color: #ffffff !important;
+  font-weight: 400; 
+  letter-spacing: 1px;
+}
+
+
+/* Links */
+.custom-navbar .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #08e2ff !important;
+}
+
+.custom-navbar .nav-link.active {
+  color: #08e2ff !important;
+}
+
+/* Botones */
+.custom-navbar .btn-outline-danger {
+  color: #ffffff;
+  border-color: #2a2a2a;
+}
+
+.custom-navbar .btn-outline-danger:hover {
+  background-color: #2a2a2a;
+  border-color: #2a2a2a;
+}
+
+.custom-navbar .btn-outline-primary {
+  color: #ffffff;
+  border-color: #08e2ff;
+}
+
+.custom-navbar .btn-outline-primary:hover {
+  background-color: #08e2ff;
+  border-color: #08e2ff;
+}
+
+/* Toggler */
+.custom-navbar .navbar-toggler {
+  border-color: #2a2a2a;
+}
+
+.custom-navbar .navbar-toggler-icon {
+  filter: invert(1);
+}

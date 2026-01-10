@@ -1,0 +1,116 @@
+
+.quienes-container {
+  max-width: 1200px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+  color: var(--white);
+}
+
+/* TITULO */
+.quienes-title {
+  font-family: var(--font-title);
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 5rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green-neon);
+}
+
+/* MISION VISION */
+.info-block {
+  max-width: 850px;
+  margin: 0 auto 4rem auto;
+}
+
+.info-title {
+  font-family: var(--font-title);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+
+.info-text {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--gray-light);
+}
+
+/* STAFF */
+.staff-section {
+  margin-top: 6rem;
+}
+
+.staff-section .info-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  color : var(--green-neon);
+}
+
+/* CARRUSEL */
+.staff-carousel {
+  display: flex;
+  gap: 2.5rem;
+  overflow-x: auto;
+  padding: 1rem 0 2rem;
+  scroll-snap-type: x mandatory;
+}
+
+/* Scrollbar */
+.staff-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.staff-carousel::-webkit-scrollbar-thumb {
+  background-color: var(--green-neon);
+  border-radius: 10px;
+}
+
+/* STAFF CARD */
+.staff-card {
+  scroll-snap-align: center;
+  min-width: 240px;
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 18px;
+  padding: 1.2rem;
+  text-align: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.staff-card:hover {
+  transform: translateY(-8px);
+}
+
+.staff-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 0.8rem;
+}
+
+.staff-card p {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  color: var(--white);
+  margin: 0;
+}
+
+
+@media (max-width: 768px) {
+  .quienes-title {
+    font-size: 2.6rem;
+  }
+
+  .info-title {
+    font-size: 1.9rem;
+  }
+
+  .staff-card {
+    min-width: 200px;
+  }
+}
