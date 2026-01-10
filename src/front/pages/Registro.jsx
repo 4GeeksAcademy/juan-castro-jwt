@@ -32,16 +32,23 @@ const Registro = () => {
                     }
                 }
             );
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+            try { data = JSON.parse(text); } catch { data = { message: text }; }
+
+            console.log('Registro response status:', response.status, 'body:', data);
+
             if (response.ok) {
                 alert("El usuario se creó con éxito");
-                navigate("/login")
-                console.log(data.nuevo_usuario);
+                navigate("/login");
+                console.log(data.nuevo_usuario || data);
             } else {
-                alert("Error al crear usuario");
+                alert("Error al crear usuario: " + (data.message || response.status));
+                console.error('Detalle error:', data);
             }
         } catch (error) {
-            console.error(error);
+            console.error('Network/fetch error:', error);
+            alert('Error de red al crear usuario');
         } finally {
             setLoading(false);
         }

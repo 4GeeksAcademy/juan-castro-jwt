@@ -55,7 +55,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const ClientDetailForm = ({ client, isCreating, onSave, onCancelCreate }) => {
+const ClientDetailForm = ({ client, isCreating, onSave, onCancelCreate, saving, error }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -132,33 +132,35 @@ const ClientDetailForm = ({ client, isCreating, onSave, onCancelCreate }) => {
 
       {isCreating && (
         <>
-          <input className="form-control mb-2" name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" />
-          <input className="form-control mb-2" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
-          <input type="password" className="form-control mb-2" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+          <input className="form-control mb-2" name="name" value={formData.name} onChange={handleChange} placeholder="Nombre" disabled={saving} />
+          <input className="form-control mb-2" name="email" value={formData.email} onChange={handleChange} placeholder="Email" disabled={saving} />
+          <input type="password" className="form-control mb-2" name="password" value={formData.password} onChange={handleChange} placeholder="Password" disabled={saving} />
         </>
       )}
 
-      <input className="form-control mb-2" name="altura" value={formData.altura} onChange={handleChange} placeholder="Altura" />
-      <input className="form-control mb-2" name="peso" value={formData.peso} onChange={handleChange} placeholder="Peso" />
+      <input className="form-control mb-2" name="altura" value={formData.altura} onChange={handleChange} placeholder="Altura" disabled={saving} />
+      <input className="form-control mb-2" name="peso" value={formData.peso} onChange={handleChange} placeholder="Peso" disabled={saving} />
 
-      <select className="form-select mb-2" name="rutina" value={formData.rutina} onChange={handleChange}>
+      <select className="form-select mb-2" name="rutina" value={formData.rutina} onChange={handleChange} disabled={saving}>
         <option value="">Rutina</option>
         <option value="Principiante">Principiante</option>
         <option value="Intermedio">Intermedio</option>
         <option value="Avanzado">Avanzado</option>
       </select>
 
-      <select className="form-select mb-2" name="estado" value={formData.estado} onChange={handleChange}>
+      {/* <select className="form-select mb-2" name="estado" value={formData.estado} onChange={handleChange}>
         <option value="Activo">Activo</option>
         <option value="Inactivo">Inactivo</option>
-      </select>
+      </select> */}
 
-      <textarea className="form-control mb-2" name="observaciones" value={formData.observaciones} onChange={handleChange} />
+      <textarea className="form-control mb-3" name="observaciones" value={formData.observaciones} onChange={handleChange} disabled={saving} />
+
+      {error && <div className="alert alert-danger">{error}</div>}
 
       <div className="d-flex gap-2">
-        <button type="submit" className="btn btn-primary">{isCreating ? "Crear" : "Guardar"}</button>
+        <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? (isCreating ? "Creando..." : "Guardando...") : (isCreating ? "Crear" : "Guardar")}</button>
         {isCreating && (
-          <button type="button" className="btn btn-secondary" onClick={onCancelCreate}>Cancelar</button>
+          <button type="button" className="btn btn-secondary" onClick={onCancelCreate} disabled={saving}>Cancelar</button>
         )}
       </div>
     </form>
