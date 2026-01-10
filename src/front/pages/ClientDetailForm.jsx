@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 
-const ClientDetailForm = ({ client, onSave, isCreating, onCancelCreate }) => {
+const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,17 +25,18 @@ const ClientDetailForm = ({ client, onSave, isCreating, onCancelCreate }) => {
         observaciones: "",
         estado: "Activo",
       });
+      
       setIsModified(true); 
-    } else if (client) {
+    } else if (user) {
       const newData = {
-        name: client.name || "",
-        email: client.email || "",
+        name: user.name || "",
+        email: user.email || "",
         // Password no se muestra
-        altura: client.altura || "",
-        peso: client.peso || "",
-        rutina: client.rutina || "",
-        observaciones: client.observaciones || "",
-        estado: client.estado || "",
+        altura: user.altura || "",
+        peso: user.peso || "",
+        rutina: user.rutina || "",
+        observaciones: user.observaciones || "",
+        estado: user.estado || "",
       };
       setFormData(newData);
       setIsModified(false);
@@ -53,24 +54,25 @@ const ClientDetailForm = ({ client, onSave, isCreating, onCancelCreate }) => {
       setIsModified(false);
     }
   }, [client, isCreating]);
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    setIsModified(true);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isCreating) {
-      if (!formData.name || !formData.email || !formData.password) {
-        alert("Nombre, Email y Contraseña son obligatorios");
-        return;
-      }
-    }
-    onSave(formData);
-    if (!isCreating) setIsModified(false);
-  };
+  // const handleChange = (e) => {
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]: e.target.value,
+  //   });
+  //   setIsModified(true);
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (isCreating) {
+  //     if (!formData.name || !formData.email || !formData.password) {
+  //       alert("Nombre, Email y Contraseña son obligatorios");
+  //       return;
+  //     }
+  //   }
+  //   onSave(formData);
+  //   if (!isCreating) setIsModified(false);
+  // };
   if (!client && !isCreating) {
     return (
       <div className="card shadow-sm h-100">

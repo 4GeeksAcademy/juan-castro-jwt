@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Boolean, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+
+# from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -15,8 +16,10 @@ class User(db.Model):
     is_active = db.Column(Boolean(), default=True)
     role = db.Column(String(50), nullable=False, default="client")
     estado = db.Column(String(50), default="Desactivado")
+    altura = db.Column(String(120))
+    peso = db.Column(String(20))
+    observaciones = db.Column(String(200))
 
-    client = relationship("Client", back_populates="user", uselist=False)
 
     def serialize(self):
         return {
@@ -24,32 +27,23 @@ class User(db.Model):
             "name": self.name,
             "email": self.email,
             "role": self.role,
-            "estado": self.estado
+            "estado": self.estado,
+            "altura": self.altura,
+            "peso": self.peso,
+            "observaciones": self.observaciones
         }
 
-
-class Client(db.Model):
-    __tablename__ = "clients"
+class EjercicioAsignado(db.Model):
+    __tablename__ = "ejercicios_asignados"
 
     id = db.Column(Integer, primary_key=True)
     user_id = db.Column(Integer, ForeignKey("users.id"), nullable=False)
-
-    altura = db.Column(String(120))
-    peso = db.Column(String(20))
-    rutina = db.Column(String(50))
-    observaciones = db.Column(String(200))
-
-    user = relationship("User", back_populates="client")
+    execise_name = db.Column(String(100), nullable=False)
 
     def serialize(self):
         return {
-            "id": self.id,
+           "id": self.id,
             "user_id": self.user_id,
-            "name": self.user.name,
-            "email": self.user.email,
-            "altura": self.altura,
-            "peso": self.peso,
-            "rutina": self.rutina,
-            "observaciones": self.observaciones,
-            
+            "exercise_name": self.execise_name
         }
+

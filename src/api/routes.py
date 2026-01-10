@@ -1,6 +1,6 @@
 import os, requests
 from flask import request, jsonify, Blueprint
-from api.models import db, User, Client
+from api.models import db, User
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
@@ -113,6 +113,10 @@ def update_user(user_id):
     user.email = data.get("email")
     user.role = data.get("role")
     user.estado = data.get("estado")
+    user.altura = data.get("altura")
+    user.peso = data.get("peso")
+    user.rutina = data.get("rutina")
+    user.observaciones = data.get("observaciones")
 
     db.session.commit()
     return jsonify(user.serialize()), 200
@@ -122,101 +126,99 @@ def update_user(user_id):
 # CLIENT PROFILE (CLIENT)
 # -----------------------
 
-@api.route("/client/profile", methods=["GET"])
+@api.route("/user/profile", methods=["GET"])
 @jwt_required()
-def client_profile():
+def user_profile():
     user_id = int(get_jwt_identity())
 
-    client = Client.query.filter_by(user_id=user_id).first()
-    if not client:
-        return jsonify({"msg": "Perfil de cliente no encontrado"}), 404
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return jsonify({"msg": "Perfil de usuario no encontrado"}), 404
 
-    return jsonify(client.serialize()), 200
-
+    return jsonify(user.serialize()), 200
 
 # -----------------------
 # CLIENT CRUD (TRAINER)
 # -----------------------
 
-@api.route("/clients", methods=["GET"])
-@jwt_required()
-def get_clients():
-    clients = Client.query.all()
-    return jsonify([c.serialize() for c in clients]), 200
+# @api.route("/clients", methods=["GET"])
+# @jwt_required()
+# def get_clients():
+#     clients = Client.query.all()
+#     return jsonify([c.serialize() for c in clients]), 200
 
 
-@api.route("/clients", methods=["POST"])
-@jwt_required()
-def create_client():
-    data = request.get_json()
-    if not data:
-        return jsonify({"msg": "No data"}), 400
-    user = None
+# @api.route("/clients", methods=["POST"])
+# @jwt_required()
+# def create_client():
+#     data = request.get_json()
+#     if not data:
+#         return jsonify({"msg": "No data"}), 400
+#     user = None
 
-    # Si nos pasan user_id, enlazamos ese usuario existente
-    user_id = data.get("user_id")
-    if user_id:
-        user = User.query.get(int(user_id))
-        if not user:
-            return jsonify({"msg": "Usuario no encontrado"}), 404
-        # Evitar duplicar perfil de cliente
-        existing = Client.query.filter_by(user_id=user.id).first()
-        if existing:
-            return jsonify({"msg": "Cliente ya existe para ese usuario"}), 400
-        # Asegurar que el role sea 'client'
-        if user.role != "client":
-            user.role = "client"
-            db.session.commit()
-    else:
-        # Crear un nuevo usuario (se requieren name, email y password)
-        name = data.get("name")
-        email = data.get("email")
-        password = data.get("password")
-        if not name or not email or not password:
-            return jsonify({"msg": "Faltan campos para crear el usuario (name, email, password)"}), 400
+#     # Si nos pasan user_id, enlazamos ese usuario existente
+#     user_id = data.get("user_id")
+#     if user_id:
+#         user = User.query.get(int(user_id))
+#         if not user:
+#             return jsonify({"msg": "Usuario no encontrado"}), 404
+#         # Evitar duplicar perfil de cliente
+#         existing = Client.query.filter_by(user_id=user.id).first()
+#         if existing:
+#             return jsonify({"msg": "Cliente ya existe para ese usuario"}), 400
+#         # Asegurar que el role sea 'client'
+#         if user.role != "client":
+#             user.role = "client"
+#             db.session.commit()
+#     else:
+#         # Crear un nuevo usuario (se requieren name, email y password)
+#         name = data.get("name")
+#         email = data.get("email")
+#         password = data.get("password")
+#         if not name or not email or not password:
+#             return jsonify({"msg": "Faltan campos para crear el usuario (name, email, password)"}), 400
 
-        # verificar si el email ya existe
-        busqueda = User.query.filter_by(email=email).first()
-        if busqueda:
-            return jsonify({"msg": "Este email ya existe"}), 400
+#         # verificar si el email ya existe
+#         busqueda = User.query.filter_by(email=email).first()
+#         if busqueda:
+#             return jsonify({"msg": "Este email ya existe"}), 400
 
-        user = User(
-            name=name,
-            email=email,
-            password=bcrypt.generate_password_hash(password).decode("utf-8"),
-            role="client"
-        )
-        db.session.add(user)
-        db.session.commit()
+#         user = User(
+#             name=name,
+#             email=email,
+#             password=bcrypt.generate_password_hash(password).decode("utf-8"),
+#             role="client"
+#         )
+#         db.session.add(user)
+#         db.session.commit()
 
-    # Crear perfil de cliente vinculado al user.id
-    client = Client(
-        user_id=user.id,
-        altura=data.get("altura"),
-        peso=data.get("peso"),
-        rutina=data.get("rutina"),
-        observaciones=data.get("observaciones"),
-        estado=data.get("estado", "Activo")
-    )
-    db.session.add(client)
-    db.session.commit()
+#     # Crear perfil de cliente vinculado al user.id
+#     client = Client(
+#         user_id=user.id,
+#         altura=data.get("altura"),
+#         peso=data.get("peso"),
+#         rutina=data.get("rutina"),
+#         observaciones=data.get("observaciones"),
+#         estado=data.get("estado", "Activo")
+#     )
+#     db.session.add(client)
+#     db.session.commit()
 
-    return jsonify(client.serialize()), 201
+#     return jsonify(client.serialize()), 201
 
 
-@api.route("/clients/<int:client_id>", methods=["PUT"])
-@jwt_required()
-def update_client(client_id):
-    client = Client.query.get(client_id)
-    if not client:
-        return jsonify({"msg": "Cliente no encontrado"}), 404
+# @api.route("/users/<int:user_id>", methods=["PUT"])
+# @jwt_required()
+# def update_user(user_id):
+#     user = User.query.get(user_id)
+#     if not user:
+#         return jsonify({"msg": "usuario no encontrado"}), 404
 
-    data = request.get_json()
-    client.altura = data.get("altura")
-    client.peso = data.get("peso")
-    client.rutina = data.get("rutina")
-    client.observaciones = data.get("observaciones")
-    
+#     data = request.get_json()
+#     user.altura = data.get("altura")
+#     user.peso = data.get("peso")
+#     user.rutina = data.get("rutina")
+#     user.observaciones = data.get("observaciones")
 
-    db.session.commit()
-    return jsonify(client.serialize()), 200
+#     db.session.commit()
+#     return jsonify(user.serialize()), 200

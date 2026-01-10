@@ -6,6 +6,8 @@ const Trainer = () => {
   const [selectedClient, setSelectedClient] = useState(null);
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
@@ -22,7 +24,12 @@ const Trainer = () => {
       }
     });
 
-    const data = await res.json();
+    let data = null;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = null;
+    }
     const clientsOnly = Array.isArray(data) ? data.filter(u => u.role === 'client') : [];
     setClients(clientsOnly);
     setLoading(false);
@@ -30,34 +37,61 @@ const Trainer = () => {
 
   const handleSave = async (formData) => {
     const token = localStorage.getItem("access_token");
+    setSaving(true);
+    setError(null);
 
     const url = isCreating
       ? `${BACKEND}/api/users`
-      : `${BACKEND}/api/clients/${selectedClient.id}`;
+      : `${BACKEND}/api/users/${selectedClient?.id}`;
 
     const method = isCreating ? "POST" : "PUT";
 
-    const res = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(formData)
-    });
+    // Al actualizar, combinar los datos existentes del cliente con los
+    // cambios del formulario para evitar enviar campos como `name` o `email`
+    // con valor `null` y romper restricciones de la BD.
+    const payload = isCreating ? formData : { ...(selectedClient || {}), ...formData };
 
-    const updated = await res.json();
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
 
-    if (isCreating) {
-      setClients(prev => [...prev, updated]);
-    } else {
-      setClients(prev =>
-        prev.map(c => (c.id === updated.id ? updated : c))
-      );
+      if (!res.ok) {
+        let errMsg = `Error ${res.status}`;
+        try {
+          const errJson = await res.json();
+          errMsg = errJson.message || JSON.stringify(errJson);
+        } catch (e) {
+          const text = await res.text();
+          if (text) errMsg = text;
+        }
+        setError(errMsg);
+        setSaving(false);
+        return;
+      }
+
+      const updated = await res.json();
+
+      if (isCreating) {
+        setClients(prev => [...prev, updated]);
+      } else {
+        setClients(prev =>
+          prev.map(c => (c.id === updated.id ? updated : c))
+        );
+      }
+
+      setSelectedClient(updated);
+      setIsCreating(false);
+    } catch (err) {
+      setError(err.message || 'Error de red');
+    } finally {
+      setSaving(false);
     }
-
-    setSelectedClient(updated);
-    setIsCreating(false);
   };
 
   if (loading) return <p className="text-center mt-5">Cargando clientes...</p>;
@@ -99,6 +133,8 @@ const Trainer = () => {
             client={selectedClient}
             isCreating={isCreating}
             onSave={handleSave}
+            saving={saving}
+            error={error}
             onCancelCreate={() => setIsCreating(false)}
           />
         </div>
