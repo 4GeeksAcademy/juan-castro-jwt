@@ -1,0 +1,126 @@
+/* ===============================
+   WRAPPER CON IMAGEN + OVERLAY
+================================ */
+.exercise-wrapper {
+  min-height: 100vh;
+  padding: 6rem 0;
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768189936/Dise%C3%B1o_sin_t%C3%ADtulo_10_h3vz8w.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.exercise-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.385);
+  z-index: 1;
+}
+
+/* ===============================
+   CONTENIDO ENCIMA DEL OVERLAY
+================================ */
+.exercise-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ===============================
+   TITULOS
+================================ */
+.exercise-title {
+  font-family: var(--font-title);
+  color: var(--green-neon);
+  letter-spacing: 4px;
+  margin-bottom: 3rem;
+}
+
+.exercise-loading {
+  text-align: center;
+  color: var(--green-neon);
+}
+
+/* ===============================
+   GRID & CARDS
+================================ */
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+
+.exercise-card {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 20px;
+  padding: 2rem;
+  color: var(--white);
+}
+
+.exercise-card h4 {
+  color: var(--green-neon);
+  margin-bottom: 1rem;
+}
+
+.exercise-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-card li {
+  font-size: 0.9rem;
+  color: var(--gray-light);
+}
+
+.exercise-card span {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ===============================
+   BOTONES
+================================ */
+.exercise-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-neon {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--green-neon);
+  color: var(--green-neon);
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
+}
+
+.btn-outline:hover {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+}
+
+/* ===============================
+   MODAL OSCURO (NO BLOQUEA SCROLL)
+================================ */
+.dark-modal {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  color: var(--white);
+}
+
+.dark-modal h5 {
+  color: var(--green-neon);
+}

@@ -1,8 +1,7 @@
 
 .contact-container {
   position: relative;
-  max-width: 100%;
-  margin: 0;
+  min-height: 100vh;
   padding: 6rem 2rem;
 
   background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1767820827/gimnasio_yvlbxy.png");
@@ -13,29 +12,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
-
+/* overlay */
+.contact-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.347); 
+  z-index: 1;
+}
 
 .contact-title {
+  position: relative;
+  z-index: 2;
+
   font-family: var(--font-title);
   font-size: 3.5rem;
   letter-spacing: 3px;
   margin-bottom: 4rem;
+
   color: var(--green-neon);
   text-transform: uppercase;
+  text-align: center;
 }
 
 
 .contact-form {
+  position: relative;
+  z-index: 2;
+
   background-color: var(--black-soft);
   border: 1.5px solid var(--green-neon);
   border-radius: 18px;
+
   padding: 3rem 2.5rem;
-  width: 55%;
+  width: 50%;
+  max-width: 700px;
 }
 
-/* inputs */
+/* input */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -54,6 +71,7 @@
 .form-group textarea {
   background-color: transparent;
   border: 1.5px solid var(--gray-medium);
+  border-radius: 10px;
   padding: 0.6rem 0.8rem;
   color: var(--white);
   font-family: var(--font-body);
@@ -63,6 +81,7 @@
 .form-group textarea:focus {
   outline: none;
   border-color: var(--green-neon);
+  box-shadow: 0 0 0 1px var(--green-neon);
 }
 
 
@@ -72,6 +91,7 @@
   }
 
   .contact-form {
+    width: 100%;
     padding: 2.5rem 1.5rem;
   }
 }

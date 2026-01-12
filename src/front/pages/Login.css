@@ -1,0 +1,123 @@
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768177400/fondo_gym_eogoyq.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 22px;
+  padding: 2.8rem 2.4rem;
+}
+
+
+.login-title {
+  font-family: var(--font-title);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--green-neon);
+  margin-bottom: 2.5rem;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.login-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.6rem;
+}
+
+.login-group label {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+  color: var(--white);
+}
+
+.login-group input {
+  background-color: transparent;
+  border: 1.5px solid var(--white);
+  border-radius: 10px;
+  padding: 0.7rem;
+  color: var(--white);
+}
+
+.login-group input:focus {
+  outline: none;
+  border-color: var(--green-neon);
+  box-shadow: 0 0 0 1px var(--green-neon);
+}
+
+
+.btn-neon {
+  width: 100%;
+  margin-top: 1.5rem;
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-neon:hover:not(:disabled) {
+  background-color: #ccff00;
+  box-shadow: 0 0 18px rgba(180, 255, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-neon:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   SPINNER
+========================= */
+.login-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-top: 3px solid var(--black-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 2.2rem 1.6rem;
+  }
+
+  .login-title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+}

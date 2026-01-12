@@ -1,15 +1,12 @@
-
-   /* HERO PRINCIPAL */
-
-.hero-container {
+/* HERO PRINCIPAL */.hero-container {
   position: relative;
   width: 100%;
-  height: 100vh;                 
-  padding-top: 90px;             
+  height: 75vh;
 
-  background-size: cover;
+  background-size: cover;        
   background-position: center;
   background-repeat: no-repeat;
+  background-color: #000;          
 
   display: flex;
   align-items: center;
@@ -46,11 +43,10 @@
   color: var(--green-neon);
 }
 
-
+/* Responsive */
 @media (max-width: 768px) {
   .hero-container {
-    height: 85vh;
-    padding-top: 80px;
+    min-height: calc(85vh - 80px);
   }
 
   .hero-title {

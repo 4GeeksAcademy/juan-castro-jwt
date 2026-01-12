@@ -16,8 +16,6 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import Trainer from "./pages/Trainer.jsx";
 // import Admin from "./pages/Admin.jsx";
 import ClientProfile from "./pages/ClientProfile.jsx";
-import ClientDetailForm from "./pages/ClientDetailForm.jsx";
-import ClientDetailsForm from "./pages/ClientDetailsForm.jsx";
 import Exercise from "./pages/Exercise.jsx";
 
 
@@ -47,9 +45,7 @@ export const router = createBrowserRouter(
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/ejercicios" element={<Exercise />} />
       <Route path="/perfil" element={<ClientProfile />} />
-      <Route path="/client-detail-form1" element={<ClientDetailForm />} />
-      <Route path="/client-details-form2" element={<ClientDetailsForm />} />
-    </Route>
+        </Route>
 
   )
 );

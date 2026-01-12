@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./ClientProfile.css";
 
 const ClientProfile = () => {
   const [client, setClient] = useState(null);
@@ -16,26 +17,28 @@ const ClientProfile = () => {
       .then((data) => setClient(data));
   }, []);
 
-  if (!client) return <p className="text-center mt-5">Cargando...</p>;
+  if (!client) return <p className="profile-loading">Cargando...</p>;
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow">
-        <div className="card-header bg-primary text-white">
-          <h4>Mi Perfil</h4>
-        </div>
-        <div className="card-body">
-          <p><b>Nombre:</b> {client.name}</p>
-          <p><b>Email:</b> {client.email}</p>
-          <p><b>Altura:</b> {client.altura} cm</p>
-          <p><b>Peso:</b> {client.peso} kg</p>
-          <p><b>Rutina:</b> {client.rutina}</p>
-          <p><b>Estado:</b> {client.estado}</p>
-          <p><b>Observaciones:</b></p>
-          <p>{client.observaciones || "Sin observaciones"}</p>
+    <section className="profile-container">
+      <div className="profile-card">
+        <h2 className="profile-title">Mi Perfil</h2>
+
+        <div className="profile-info">
+          <p><span>Nombre:</span> {client.name}</p>
+          <p><span>Email:</span> {client.email}</p>
+          <p><span>Altura:</span> {client.altura} cm</p>
+          <p><span>Peso:</span> {client.peso} kg</p>
+          <p><span>Rutina:</span> {client.rutina}</p>
+          <p><span>Estado:</span> {client.estado}</p>
+
+          <div className="profile-observations">
+            <span>Observaciones:</span>
+            <p>{client.observaciones || "Sin observaciones"}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

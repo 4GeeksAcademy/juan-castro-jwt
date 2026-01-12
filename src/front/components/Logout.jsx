@@ -16,9 +16,6 @@ const Logout = ()=> {
     return(
         <div>
             <button onClick={handlerLogout}>Logout</button>
-
-
-
         </div>
     )
 

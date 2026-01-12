@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ClientDetailForm from "./ClientDetailsForm";
+import ClientDetailForm from "./ClientDetailForm.jsx";
+import "./Trainer.css";
 
 const Trainer = () => {
   const [clients, setClients] = useState([]);
@@ -19,18 +20,14 @@ const Trainer = () => {
     const token = localStorage.getItem("access_token");
 
     const res = await fetch(`${BACKEND}/api/users`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     });
 
-    let data = null;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = null;
-    }
-    const clientsOnly = Array.isArray(data) ? data.filter(u => u.role === 'client') : [];
+    const data = await res.json();
+    const clientsOnly = Array.isArray(data)
+      ? data.filter(u => u.role === "client")
+      : [];
+
     setClients(clientsOnly);
     setLoading(false);
   };
@@ -45,6 +42,10 @@ const Trainer = () => {
       : `${BACKEND}/api/users/${selectedClient?.id}`;
 
     const method = isCreating ? "POST" : "PUT";
+
+    // Al actualizar, combinar los datos existentes del cliente con los
+    // cambios del formulario para evitar enviar campos como `name` o `email`
+    // con valor `null` y romper restricciones de la BD.
     const payload = isCreating ? formData : { ...(selectedClient || {}), ...formData };
 
     try {
@@ -58,47 +59,38 @@ const Trainer = () => {
       });
 
       if (!res.ok) {
-        let errMsg = `Error ${res.status}`;
-        try {
-          const errJson = await res.json();
-          errMsg = errJson.message || JSON.stringify(errJson);
-        } catch (e) {
-          const text = await res.text();
-          if (text) errMsg = text;
-        }
-        setError(errMsg);
+        const err = await res.text();
+        setError(err || "Error al guardar");
         setSaving(false);
         return;
       }
 
       const updated = await res.json();
 
-      if (isCreating) {
-        setClients(prev => [...prev, updated]);
-      } else {
-        setClients(prev =>
-          prev.map(c => (c.id === updated.id ? updated : c))
-        );
-      }
+      setClients(prev =>
+        isCreating
+          ? [...prev, updated]
+          : prev.map(c => (c.id === updated.id ? updated : c))
+      );
 
       setSelectedClient(updated);
       setIsCreating(false);
     } catch (err) {
-      setError(err.message || 'Error de red');
+      setError("Error de red");
     } finally {
       setSaving(false);
     }
   };
 
-  if (loading) return <p className="text-center mt-5">Cargando clientes...</p>;
+  if (loading) return <p className="trainer-loading">Cargando clientes…</p>;
 
   return (
-    <div className="container mt-4">
-      <div className="row">
+    <section className="trainer-container">
+      <div className="trainer-layout">
 
         <div className="col-md-4">
           <div className="list-group">
-            {/* <button
+            <button
               className="list-group-item list-group-item-action text-success"
               onClick={() => {
                 setSelectedClient(null);
@@ -106,11 +98,13 @@ const Trainer = () => {
               }}
             >
               ➕ Nuevo Cliente
-            </button> */}
+            </button>
 
+          <div className="trainer-client-list">
             {clients.map(client => (
               <button
-                key={client.id}className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
+                key={client.id}
+                className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
                   }`}
                 onClick={() => {
                   setSelectedClient(client);
@@ -121,9 +115,10 @@ const Trainer = () => {
               </button>
             ))}
           </div>
-        </div>
+        </aside>
 
-        <div className="col-md-8">
+        {/* FORMULARIO */}
+        <div className="trainer-content">
           <ClientDetailForm
             client={selectedClient}
             isCreating={isCreating}
@@ -135,7 +130,8 @@ const Trainer = () => {
         </div>
 
       </div>
-    </div>
+    </section>
   );
 };
+
 export default Trainer;
