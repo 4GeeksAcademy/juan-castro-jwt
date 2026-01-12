@@ -45,10 +45,6 @@ const Trainer = () => {
       : `${BACKEND}/api/users/${selectedClient?.id}`;
 
     const method = isCreating ? "POST" : "PUT";
-
-    // Al actualizar, combinar los datos existentes del cliente con los
-    // cambios del formulario para evitar enviar campos como `name` o `email`
-    // con valor `null` y romper restricciones de la BD.
     const payload = isCreating ? formData : { ...(selectedClient || {}), ...formData };
 
     try {
@@ -102,7 +98,7 @@ const Trainer = () => {
 
         <div className="col-md-4">
           <div className="list-group">
-            <button
+            {/* <button
               className="list-group-item list-group-item-action text-success"
               onClick={() => {
                 setSelectedClient(null);
@@ -110,12 +106,11 @@ const Trainer = () => {
               }}
             >
               ➕ Nuevo Cliente
-            </button>
+            </button> */}
 
             {clients.map(client => (
               <button
-                key={client.id}
-                className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
+                key={client.id}className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
                   }`}
                 onClick={() => {
                   setSelectedClient(client);

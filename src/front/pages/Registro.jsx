@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Registro = () => {
+    const API_BASE = import.meta.env.VITE_BACKEND_URL || "";
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("client");
     const [loading, setLoading] = useState(false);
-    
+
     let navigate = useNavigate()
     const handlerRegistro = async () => {
         if (name.length < 2 || email.length < 7 || password.length < 8) {
@@ -18,12 +19,12 @@ const Registro = () => {
             name,
             email,
             password,
-            role 
+            role
         };
         try {
             setLoading(true);
             const response = await fetch(
-                "https://legendary-spoon-xjv5ppjxwv5hpgwq-3001.app.github.dev/api/create_user",
+                `${API_BASE}/api/create_user`,
                 {
                     method: "POST",
                     body: JSON.stringify(payload),
