@@ -33,97 +33,102 @@ const Exercise = () => {
 
    const exercises = store?.data_exercises || [];
 
-   return (
-      <div>
-         <h1>Ejercicios</h1>
-         <h3>Bienvenido</h3>
-         {loading && <p>Cargando ejercicios...</p>}
-         {!loading && exercises.length === 0 && <p>No hay ejercicios cargados.</p>}
+   return ( 
+  <section className="exercise-wrapper">
+    <div className="exercise-container">
 
-         <div className="cards-container">
-            {exercises.map((ele, idx) => {
-               const instrModalId = `staticBackdrop-${idx}`;
-               const safetyModalId = `staticBackdrop2-${idx}`;
-               const instrLabelId = `staticBackdropLabel-${idx}`;
-               const safetyLabelId = `staticBackdropLabel2-${idx}`;
-               return (
-                  <div className="card" style={{ width: "30rem" }} key={ele.id || ele.uid || ele.name}>
-                     <div className="card-body">
-                        <h5 className="card-title">{ele.name}</h5>
-                        <ul className="list-group list-group-flush">
-                           <li className="list-group-item">Tipo: {ele.type}</li>
-                           <li className="list-group-item">Musculo que trabaja: {ele.muscle}</li>
-                           <li className="list-group-item">Dificultad: {ele.difficulty}</li>
-                        </ul>
+      <h1 className="exercise-title text-center">Ejercicios</h1>     
 
-                        {/* Button trigger modal */}
-                        <button
-                           type="button"
-                           className="btn btn-primary"
-                           data-bs-toggle="modal"
-                           data-bs-target={`#${instrModalId}`}
-                        >
-                           Instrucciones
-                        </button>
-                        <button
-                           type="button"
-                           className="btn btn-primary"
-                           data-bs-toggle="modal"
-                           data-bs-target={`#${safetyModalId}`}
-                        >
-                           Info de seguridad
-                        </button>
+      {loading && <p className="exercise-loading">Cargando ejercicios...</p>}
+      {!loading && exercises.length === 0 && (
+        <p className="exercise-loading">No hay ejercicios cargados.</p>
+      )}
 
-                        {/* Modal */}
-                        <div
-                           className="modal fade"
-                           id={instrModalId}
-                           data-bs-backdrop="static"
-                           data-bs-keyboard="false"
-                           tabIndex={-1}
-                           aria-labelledby={instrLabelId}
-                           aria-hidden="true"
-                        >
-                           <div className="modal-dialog">
-                              <div className="modal-content">
-                                 <div className="modal-header">
-                                    <h1 className="modal-title fs-5" id={instrLabelId}>Instrucciones</h1>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                 </div>
-                                 <div className="modal-body">
-                                    {ele.instructions}
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div
-                           className="modal fade"
-                           id={safetyModalId}
-                           data-bs-backdrop="static"
-                           data-bs-keyboard="false"
-                           tabIndex={-1}
-                           aria-labelledby={safetyLabelId}
-                           aria-hidden="true"
-                        >
-                           <div className="modal-dialog">
-                              <div className="modal-content">
-                                 <div className="modal-header">
-                                    <h1 className="modal-title fs-5" id={safetyLabelId}>Info de seguridad</h1>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                 </div>
-                                 <div className="modal-body">
-                                    {ele.safety_info}
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+      <div className="exercise-grid">
+        {exercises.map((ele, idx) => {
+          const instrModalId = `staticBackdrop-${idx}`;
+          const safetyModalId = `staticBackdrop2-${idx}`;
+          const instrLabelId = `staticBackdropLabel-${idx}`;
+          const safetyLabelId = `staticBackdropLabel2-${idx}`;
+
+          return (
+            <div className="exercise-card" key={ele.id || ele.uid || ele.name}>
+              <h4>{ele.name}</h4>
+
+              <ul>
+                <li>Tipo: <span>{ele.type}</span></li>
+                <li>Músculo: <span>{ele.muscle}</span></li>
+                <li>Dificultad: <span>{ele.difficulty}</span></li>
+              </ul>
+
+              <div className="exercise-actions">
+                <button
+                  type="button"
+                  className="btn-outline"
+                  data-bs-toggle="modal"
+                  data-bs-target={`#${instrModalId}`}
+                >
+                  Instrucciones
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-neon"
+                  data-bs-toggle="modal"
+                  data-bs-target={`#${safetyModalId}`}
+                >
+                  Seguridad
+                </button>
+              </div>
+
+              {/* MODAL INSTRUCCIONES */}
+              <div
+                className="modal fade"
+                id={instrModalId}
+                tabIndex={-1}
+                aria-labelledby={instrLabelId}
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div className="modal-content dark-modal">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id={instrLabelId}>Instrucciones</h5>
+                      <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" />
+                    </div>
+                    <div className="modal-body">
+                      {ele.instructions}
+                    </div>
                   </div>
-               );
-            })}
+                </div>
+              </div>
 
-         </div>
+              {/* MODAL SEGURIDAD */}
+              <div
+                className="modal fade"
+                id={safetyModalId}
+                tabIndex={-1}
+                aria-labelledby={safetyLabelId}
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div className="modal-content dark-modal">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id={safetyLabelId}>Info de seguridad</h5>
+                      <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" />
+                    </div>
+                    <div className="modal-body">
+                      {ele.safety_info}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          );
+        })}
       </div>
-   );
+    </div>
+  </section>
+);
 };
 export default Exercise;
