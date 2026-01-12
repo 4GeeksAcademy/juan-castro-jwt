@@ -42,9 +42,11 @@ const Trainer = () => {
       : `${BACKEND}/api/users/${selectedClient?.id}`;
 
     const method = isCreating ? "POST" : "PUT";
-    const payload = isCreating
-      ? formData
-      : { ...(selectedClient || {}), ...formData };
+
+    // Al actualizar, combinar los datos existentes del cliente con los
+    // cambios del formulario para evitar enviar campos como `name` o `email`
+    // con valor `null` y romper restricciones de la BD.
+    const payload = isCreating ? formData : { ...(selectedClient || {}), ...formData };
 
     try {
       const res = await fetch(url, {
@@ -86,25 +88,24 @@ const Trainer = () => {
     <section className="trainer-container">
       <div className="trainer-layout">
 
-        {/* LISTA CLIENTES */}
-        <aside className="trainer-sidebar">
-          <button
-            className="trainer-new-btn"
-            onClick={() => {
-              setSelectedClient(null);
-              setIsCreating(true);
-            }}
-          >
-            + Nuevo Cliente
-          </button>
+        <div className="col-md-4">
+          <div className="list-group">
+            <button
+              className="list-group-item list-group-item-action text-success"
+              onClick={() => {
+                setSelectedClient(null);
+                setIsCreating(true);
+              }}
+            >
+              ➕ Nuevo Cliente
+            </button>
 
           <div className="trainer-client-list">
             {clients.map(client => (
               <button
                 key={client.id}
-                className={`trainer-client-item ${
-                  selectedClient?.id === client.id ? "active" : ""
-                }`}
+                className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
+                  }`}
                 onClick={() => {
                   setSelectedClient(client);
                   setIsCreating(false);

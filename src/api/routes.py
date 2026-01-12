@@ -1,6 +1,7 @@
-import os, requests
+import os
+import requests
 from flask import request, jsonify, Blueprint
-from api.models import db, User
+from api.models import db, User, EjercicioAsignado
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
@@ -20,9 +21,26 @@ jwt = JWTManager()
 bp = Blueprint('proxy', __name__)
 API_KEY = os.environ.get("API_KEY_EXERCISES")
 
+
 @bp.route("/api/exercises")
 def exercises():
-    r = requests.get("https://api.api-ninjas.com/v1/exercises",
+    # Forward any query parameters received to the external API (allows filtering)
+    params = request.args.to_dict(flat=False)
+    try:
+        r = requests.get(
+            "https://api.api-ninjas.com/v1/exercises",
+            headers={"X-Api-Key": API_KEY},
+            params=params if params else None,
+            timeout=10,
+        )
+        return jsonify(r.json()), r.status_code
+    except Exception as e:
+        return jsonify({"msg": "error fetching exercises", "error": str(e)}), 500
+
+
+@bp.route("/api/exercisesdifficulty")
+def exercisesdifficulty():
+    r = requests.get("https://api.api-ninjas.com/v1/exercises?difficulty=",
                      headers={"X-Api-Key": API_KEY}, timeout=10)
     return jsonify(r.json()), r.status_code
 
@@ -44,7 +62,7 @@ def create_user():
     user = User.query.filter_by(email=email).first()
     if user:
         return jsonify({"msg": "Usuario ya existe"}), 404
-    
+
     new_user = User(
         name=data.get("name"),
         email=email,
@@ -101,6 +119,7 @@ def get_users():
     users = User.query.all()
     return jsonify([u.serialize() for u in users]), 200
 
+
 @api.route("/users/<int:user_id>", methods=["PUT"])
 @jwt_required()
 def update_user(user_id):
@@ -120,7 +139,7 @@ def update_user(user_id):
 
     db.session.commit()
     return jsonify(user.serialize()), 200
- 
+
 
 # -----------------------
 # CLIENT PROFILE (CLIENT)
@@ -136,6 +155,73 @@ def user_profile():
         return jsonify({"msg": "Perfil de usuario no encontrado"}), 404
 
     return jsonify(user.serialize()), 200
+
+# -----------------------
+# EJERCICIOS ASIGNADOS
+# -----------------------
+
+
+@api.route("/assign-exercise", methods=["POST"])
+@jwt_required()
+def assign_exercise():
+    """Asignar un ejercicio a un cliente"""
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "No data"}), 400
+
+    user_id = data.get("user_id")
+    exercise_name = data.get("exercise_name")
+
+    if not user_id or not exercise_name:
+        return jsonify({"msg": "Faltan datos requeridos"}), 400
+
+    # Verificar que el usuario existe
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    # Verificar si ya está asignado
+    existing = EjercicioAsignado.query.filter_by(
+        user_id=user_id,
+        execise_name=exercise_name
+    ).first()
+
+    if existing:
+        return jsonify({"msg": "Este ejercicio ya está asignado a este cliente"}), 400
+
+    # Crear la asignación
+    assignment = EjercicioAsignado(
+        user_id=user_id,
+        execise_name=exercise_name
+    )
+
+    db.session.add(assignment)
+    db.session.commit()
+
+    return jsonify({
+        "msg": "Ejercicio asignado correctamente",
+        "assignment": assignment.serialize()
+    }), 201
+
+
+@api.route("/my-exercises", methods=["GET"])
+@jwt_required()
+def get_my_exercises():
+    """Obtener ejercicios asignados al cliente logueado"""
+    user_id = int(get_jwt_identity())
+
+    assignments = EjercicioAsignado.query.filter_by(user_id=user_id).all()
+
+    return jsonify([a.serialize() for a in assignments]), 200
+
+
+@api.route("/client-exercises/<int:client_id>", methods=["GET"])
+@jwt_required()
+def get_client_exercises(client_id):
+    """Obtener ejercicios asignados a un cliente específico (para trainers)"""
+    assignments = EjercicioAsignado.query.filter_by(user_id=client_id).all()
+
+    return jsonify([a.serialize() for a in assignments]), 200
 
 # -----------------------
 # CLIENT CRUD (TRAINER)
