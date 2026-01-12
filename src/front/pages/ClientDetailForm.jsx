@@ -25,8 +25,8 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
         observaciones: "",
         estado: "Activo",
       });
-      
-      setIsModified(true); 
+
+      setIsModified(true);
     } else if (user) {
       const newData = {
         name: user.name || "",
@@ -92,16 +92,14 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
   return (
     <div className="card shadow-sm border-primary">
       <div
-        className={`card-header ${
-          isCreating ? "bg-success text-white" : "bg-white"
-        } border-bottom`}
+        className={`card-header ${isCreating ? "bg-success text-white" : "bg-white"
+          } border-bottom`}
       >
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center">
             <div
-              className={`rounded-circle ${
-                isCreating ? "bg-white text-success" : "bg-primary text-white"
-              } d-flex align-items-center justify-content-center me-3`}
+              className={`rounded-circle ${isCreating ? "bg-white text-success" : "bg-primary text-white"
+                } d-flex align-items-center justify-content-center me-3`}
               style={{ width: "60px", height: "60px", fontSize: "28px" }}
             >
               {isCreating ? (
@@ -321,24 +319,17 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
                 )}
                 {isCreating && (
                   <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={onCancelCreate}
-                  >
-                    Cancelar
-                  </button>
+                    type="button" className="btn btn-secondary" onClick={onCancelCreate}>Cancelar</button>
                 )}
                 <button
                   type="submit"
-                  className={`btn ${
-                    isCreating ? "btn-success" : "btn-primary"
-                  }`}
+                  className={`btn ${isCreating ? "btn-success" : "btn-primary"
+                    }`}
                   disabled={!isModified && !isCreating}
                 >
                   <i
-                    className={`bi ${
-                      isCreating ? "bi-plus-circle" : "bi-save"
-                    } me-2`}
+                    className={`bi ${isCreating ? "bi-plus-circle" : "bi-save"
+                      } me-2`}
                   ></i>
                   {isCreating ? "Crear Cliente" : "Guardar Cambios"}
                 </button>

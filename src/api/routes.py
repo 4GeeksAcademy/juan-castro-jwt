@@ -26,6 +26,12 @@ def exercises():
                      headers={"X-Api-Key": API_KEY}, timeout=10)
     return jsonify(r.json()), r.status_code
 
+@bp.route("/api/exercisesdifficulty")
+def exercisesdifficulty():
+    r = requests.get("https://api.api-ninjas.com/v1/exercises?difficulty=",
+                     headers={"X-Api-Key": API_KEY}, timeout=10)
+    return jsonify(r.json()), r.status_code
+
 # -----------------------
 # Crear un nuevo user
 # -----------------------

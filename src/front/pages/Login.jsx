@@ -4,6 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 const Login = () => {
     const [email, setEmail] = useState("");
+    const API_BASE = import.meta.env.VITE_BACKEND_URL || "";
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const { store, dispatch } = useGlobalReducer()
@@ -19,7 +20,7 @@ const Login = () => {
             setLoading(true);
 
             const response = await fetch(
-                "https://legendary-spoon-xjv5ppjxwv5hpgwq-3001.app.github.dev/api/login",
+                `${API_BASE}/api/login`,
                 {
                     method: "POST",
                     body: JSON.stringify({
@@ -39,11 +40,11 @@ const Login = () => {
                 localStorage.setItem("access_token", data.access_token);
                 dispatch({ type: "current_user", payload: data })
                 window.alert("Bienvenido");
-                
+
                 const role = data?.user?.role || data?.role || data?.current_user?.role || null;
                 const roleRouteMap = {
                     adm: "/admin",
-                    trainer: "/trainer",                    
+                    trainer: "/trainer",
                     client: "/perfil"
                 };
                 const destination = role ? (roleRouteMap[role] || "/dashboard") : "/dashboard";
