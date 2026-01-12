@@ -65,7 +65,7 @@ const Dashboard = () => {
             <h1>Dashboard</h1>
             <h2>Bienvenido: {store.current_user?.name || user?.name}</h2>
 
-            {/* Modal de suscripción impaga */}
+            
             {showPaymentModal && (
                 <div className="modal fade show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <div className="modal-dialog modal-dialog-centered">
@@ -86,7 +86,7 @@ const Dashboard = () => {
                                     Cerrar
                                 </button>
                                 <a
-                                    href="https://www.mercadopago.com.ar"
+                                    href="https://www.mercadopago.cl"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="btn btn-success"
