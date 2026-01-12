@@ -1,125 +1,187 @@
-
-.trainer-container {
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.admin-wrapper {
+  position: relative;
   min-height: 100vh;
-  padding: 5rem 2rem;
-  background-color: var(--black-primary);
-  color: var(--white);
+  padding: 6rem 2rem;
 
-background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768188615/Dise%C3%B1o_sin_t%C3%ADtulo_8_jcxwyt.png");
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768189936/Dise%C3%B1o_sin_t%C3%ADtulo_10_h3vz8w.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* overlay */
-.trainer-container::before {
+.admin-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.704);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 1;
 }
 
-
-
-.trainer-layout {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 2.5rem;
+/* ===== CONTENEDOR INTERNO ===== */
+.admin-container {
+  position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 1200px;
 }
 
+/* ===== TÍTULO ===== */
+.admin-container h2 {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  letter-spacing: 3px;
+  margin-bottom: 4rem;
+  text-align: center;
 
+  color: var(--green-neon);
+  text-transform: uppercase;
+}
+
+/* ===== LAYOUT ===== */
+.trainer-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+/* ===== SIDEBAR ===== */
 .trainer-sidebar {
+  width: 280px;
   background-color: var(--black-soft);
   border: 1.5px solid var(--green-neon);
-  border-radius: 20px;
-  padding: 1.8rem;
-  z-index: 2;
+  border-radius: 18px;
+  padding: 2rem;
 }
 
-.trainer-new-btn {
-  width: 100%;
-  margin-bottom: 1.5rem;
-
+.trainer-sidebar h4 {
   font-family: var(--font-title);
   letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  color: var(--white);
   text-transform: uppercase;
-
-  background-color: transparent;
-  border: 1.5px solid var(--green-neon);
-  color: var(--green-neon);
-
-  padding: 0.7rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.trainer-new-btn:hover {
-  background-color: var(--green-neon);
-  color: var(--black-primary);
-}
-
-/* lista de clientes  */
-.trainer-client-list {
+/* ===== LISTA ENTRENADORES ===== */
+.trainer-list {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
+  max-height: 420px;
+  overflow-y: auto;
 }
 
-.trainer-client-item {
-  background-color: transparent;
-  border: 1px solid var(--gray-medium);
-  color: var(--white);
-
-  padding: 0.6rem 0.8rem;
+.trainer-item-card {
+  padding: 0.9rem 1rem;
   border-radius: 10px;
-  text-align: left;
+  border: 1.5px solid var(--gray-medium);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
-.trainer-client-item:hover {
-  border-color: var(--green-neon);
-  color: var(--green-neon);
-}
-
-.trainer-client-item.active {
-  background-color: var(--green-neon);
-  color: var(--black-primary);
+.trainer-item-card:hover {
   border-color: var(--green-neon);
 }
 
+.trainer-item-card p {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--white);
+  font-size: 0.95rem;
+}
 
+.trainer-item-card small {
+  color: var(--gray-light);
+  font-size: 0.8rem;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
 .trainer-content {
+  flex: 1;
+}
+
+/* ===== CARD FORMULARIO ===== */
+.admin-card {
   background-color: var(--black-soft);
   border: 1.5px solid var(--green-neon);
-  border-radius: 20px;
-  padding: 2.2rem;
-   z-index: 2;
+  border-radius: 18px;
+  padding: 3rem 2.5rem;
 }
 
-
-.trainer-loading {
-  margin-top: 6rem;
-  text-align: center;
+.admin-card h4 {
   font-family: var(--font-title);
   letter-spacing: 2px;
-  color: var(--green-neon);
+  margin-bottom: 0.5rem;
+  color: var(--white);
+  text-transform: uppercase;
 }
 
+.admin-card .text-muted {
+  color: var(--gray-light) !important;
+}
 
-@media (max-width: 900px) {
+/* ===== FORMULARIO ===== */
+.form-label {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  color: var(--white);
+}
+
+.form-control,
+.form-select {
+  background-color: transparent;
+  border: 1.5px solid var(--gray-medium);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  color: var(--white);
+  font-family: var(--font-body);
+}
+
+.form-control::placeholder {
+  color: var(--gray-light);
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--green-neon);
+  box-shadow: 0 0 0 1px var(--green-neon);
+}
+
+/* ===== BOTÓN ===== */
+.btn-success {
+  background-color: transparent;
+  border: 1.5px solid var(--green-neon);
+  color: var(--green-neon);
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  padding: 0.8rem;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.btn-success:hover {
+  background-color: var(--green-neon);
+  color: var(--black);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
   .trainer-layout {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .trainer-sidebar {
-    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .admin-container h2 {
+    font-size: 2.4rem;
   }
 }

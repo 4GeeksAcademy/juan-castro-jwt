@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Logout from "../components/Logout";
 import { useEffect, useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import "./Dashboard.css";
 
 
 const Dashboard = () => {
@@ -61,76 +62,81 @@ const Dashboard = () => {
     }, [BACKEND])
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <h2>Bienvenido: {store.current_user?.name || user?.name}</h2>
+  <section className="dashboard-wrapper">
+    <div className="dashboard-container">
 
-            {/* Modal de suscripción impaga */}
-            {showPaymentModal && (
-                <div className="modal fade show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            <div className="modal-header bg-danger text-white">
-                                <h5 className="modal-title">⚠️ Suscripción Impaga</h5>
-                            </div>
-                            <div className="modal-body">
-                                <p>Tu suscripción ha expirado o está impaga.</p>
-                                <p>Para continuar usando nuestros servicios, por favor realiza el pago.</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    onClick={() => setShowPaymentModal(false)}
-                                >
-                                    Cerrar
-                                </button>
-                                <a
-                                    href="https://www.mercadopago.com.ar"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn btn-success"
-                                >
-                                    💳 Ir a Mercado Pago
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+      <h1 className="dashboard-title">
+        Bienvenido: {store.current_user?.name || user?.name}
+      </h1>
 
-            {/* Sección de ejercicios asignados */}
-            <div className="mt-5">
-                <h3>Mis Ejercicios Asignados</h3>
-                {loading ? (
-                    <p>Cargando ejercicios...</p>
-                ) : exercises.length === 0 ? (
-                    <p className="alert alert-info">No tienes ejercicios asignados aún.</p>
-                ) : (
-                    <div className="table-responsive">
-                        <table className="table table-striped table-hover">
-                            <thead className="table-dark">
-                                <tr>
-                                    <th>Nombre del Ejercicio</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {exercises.map(exercise => (
-                                    <tr key={exercise.id}>
-                                        <td>{exercise.exercise_name}</td>
-                                        <td>
-                                            <button className="btn btn-primary btn-sm">Ver Detalles</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+      {/* modal de suscripción  */}
+      {showPaymentModal && (
+        <div className="dashboard-modal-overlay">
+          <div className="dashboard-modal">
+            <h3>Suscripción Impaga</h3>
+            <p>Tu suscripción ha expirado o está impaga.</p>
+            <p>Para continuar usando la plataforma, realiza el pago.</p>
+
+            <div className="dashboard-modal-actions">
+              <button
+                className="btn-outline"
+                onClick={() => setShowPaymentModal(false)}
+              >
+                Cerrar
+              </button>
+              <a
+                href="https://www.mercadopago.com.ar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-neon"
+              >
+                Ir a Mercado Pago
+              </a>
             </div>
+          </div>
         </div>
-    )
+      )}
+
+     {/* ejercicios */}
+      <div className="dashboard-section">
+        <h3 className="section-title">Mis Ejercicios Asignados</h3>
+
+        {loading ? (
+          <p className="dashboard-loading">Cargando ejercicios...</p>
+        ) : exercises.length === 0 ? (
+          <p className="dashboard-empty">
+            No tienes ejercicios asignados aún.
+          </p>
+        ) : (
+          <div className="dashboard-table-wrapper">
+            <table className="dashboard-table">
+              <thead>
+                <tr>
+                  <th>Ejercicio</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {exercises.map(exercise => (
+                  <tr key={exercise.id}>
+                    <td>{exercise.exercise_name}</td>
+                    <td>
+                      <button className="btn-outline btn-sm">
+                        Ver Detalles
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+    </div>
+  </section>
+);
+
 }
 
 export default Dashboard;

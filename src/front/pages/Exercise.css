@@ -124,3 +124,19 @@
 .dark-modal h5 {
   color: var(--green-neon);
 }
+
+/* Evita que Bootstrap rompa el modal */
+.modal-backdrop {
+  display: none;
+}
+
+/* Ajuste botón cerrar modal */
+.btn-close-white {
+  filter: invert(1);
+}
+
+/* Evita scroll lock */
+body.modal-open {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
