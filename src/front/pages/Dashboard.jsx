@@ -65,9 +65,39 @@ const Dashboard = () => {
   <section className="dashboard-wrapper">
     <div className="dashboard-container">
 
-      <h1 className="dashboard-title">
-        Bienvenido: {store.current_user?.name || user?.name}
-      </h1>
+            
+            {showPaymentModal && (
+                <div className="modal fade show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header bg-danger text-white">
+                                <h5 className="modal-title">⚠️ Suscripción Impaga</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>Tu suscripción ha expirado o está impaga.</p>
+                                <p>Para continuar usando nuestros servicios, por favor realiza el pago.</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => setShowPaymentModal(false)}
+                                >
+                                    Cerrar
+                                </button>
+                                <a
+                                    href="https://www.mercadopago.cl"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-success"
+                                >
+                                    💳 Ir a Mercado Pago
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
       {/* modal de suscripción  */}
       {showPaymentModal && (
