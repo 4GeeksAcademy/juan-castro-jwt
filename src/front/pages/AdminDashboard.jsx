@@ -235,7 +235,6 @@ const AdminDashboard = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
-
                         <div className='mb-3'>
                             <label className='form-label'>Email</label>
                             <input

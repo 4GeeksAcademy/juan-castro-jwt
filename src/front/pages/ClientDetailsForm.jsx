@@ -161,8 +161,9 @@ const ClientDetailForm = ({ client, isCreating, onSave, onCancelCreate, saving, 
 
       <div className="d-flex gap-2">
         <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? (isCreating ? "Creando..." : "Guardando...") : (isCreating ? "Crear" : "Guardar")}</button>
-        <button type="button" className="btn btn-outline-primary" onClick={() => navigate('/ejercicios')} disabled={saving}>Asignar ejercicio</button>
-
+        {!isCreating && client && (
+          <button type="button" className="btn btn-outline-primary" onClick={() => navigate('/ejercicios', { state: { selectedClient: client } })} disabled={saving}>Asignar ejercicio</button>
+        )}
       </div>
     </form>
   );
