@@ -1,75 +1,83 @@
 
-.admin-container {
-  max-width: 1200px;
-  margin: 6rem auto;
-  padding: 0 2rem;
+.admin-wrapper {
+  min-height: 100vh;
+  padding: 6rem 0;
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768190251/Dise%C3%B1o_sin_t%C3%ADtulo_11_zrikid.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
 }
 
-/* titulos */
+.admin-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1;
+}
+
+
+.admin-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  color: var(--white);
+}
+
+
 .admin-container h2 {
   font-family: var(--font-title);
   color: var(--green-neon);
-  letter-spacing: 3px;
-  margin-bottom: 3rem;
+  letter-spacing: 4px;
+  margin-bottom: 2.5rem;
   text-transform: uppercase;
 }
 
-.admin-container h4 {
-  font-family: var(--font-title);
-  letter-spacing: 2px;
+
+.admin-search {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+
+  background-color: transparent;
+  border: 1.5px solid var(--gray-medium);
+  border-radius: 14px;
+
+  padding: 0.8rem 1.2rem;
   color: var(--white);
+
+  font-family: var(--font-body);
+  transition: all 0.25s ease;
+}
+
+.admin-search::placeholder {
+  color: var(--gray-light);
+}
+
+.admin-search:focus {
+  outline: none;
+  border-color: var(--green-neon);
+  box-shadow: 0 0 12px rgba(156, 255, 0, 0.45);
+  background-color: transparent;
 }
 
 
-.admin-container .btn {
-  font-family: var(--font-title);
-  letter-spacing: 1px;
-  border-radius: 8px;                  
-  padding: 0.6rem 1.5rem;
-}
-
-.admin-container .btn-success {
-  background-color: var(--green-neon); 
+.admin-card {
+  background-color: var(--black-soft);
   border: 1.5px solid var(--green-neon);
-  color: var(--black-primary);          
-  font-weight: 800;                     
-  transition: all 0.3s ease;
-  text-transform: uppercase;            
-}
-
-.admin-container .btn-success:hover {
-  background-color: #ccff00;            
-  color: var(--black-primary);
-  box-shadow: 0 0 20px rgba(180, 255, 0, 0.6); 
-  transform: translateY(-2px);          
-}
-
-.admin-container .btn-primary {
-  background-color: transparent;
-  border: 1.5px solid var(--white);
-  color: var(--white);
-}
-
-.admin-container .btn-primary:hover {
-  background-color: var(--white);
-  color: var(--black-primary);
-}
-
-.admin-container .btn-danger {
-  background-color: transparent;
-  border: 1.5px solid #ff4d4d;
-  color: #ff4d4d;
-}
-
-.admin-container .btn-danger:hover {
-  background-color: #ff4d4d;
-  color: var(--black-primary);
+  border-radius: 22px;
+  padding: 2rem;
+  margin-bottom: 3rem;
 }
 
 
 .admin-container table {
-  background-color: var(--black-soft);
-  border: 1.5px solid var(--green-neon);
+  width: 100%;
+  border-collapse: collapse;
+  background-color: transparent;
   color: var(--white);
 }
 
@@ -80,22 +88,32 @@
 .admin-container th {
   font-family: var(--font-title);
   letter-spacing: 1px;
-  color: #000000 !important; 
   color: var(--green-neon);
+  padding: 1rem;
   border-bottom: 1.5px solid var(--green-neon);
+  text-align: left;
 }
 
 .admin-container td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--gray-medium);
   color: var(--gray-light);
 }
 
-
-.admin-container .badge {
-  font-family: var(--font-title);
-  letter-spacing: 1px;
+/* hover fila */
+.admin-container tbody tr:hover {
+  background-color: rgba(156, 255, 0, 0.05);
 }
 
-.badge.bg-primary {
+
+.badge {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}
+
+.badge.bg-success {
   background-color: var(--green-neon) !important;
   color: var(--black-primary);
 }
@@ -105,40 +123,42 @@
   color: var(--black-primary);
 }
 
-.badge.bg-success {
-  background-color: #4caf50 !important;
-  color: var(--black-primary);
+.badge.bg-danger {
+  background-color: #ff4d4d !important;
+  color: #000;
+}
+
+.badge.bg-info {
+  background-color: #00bcd4 !important;
+  color: #000;
 }
 
 
-.admin-container .card {
-  background-color: var(--black-soft);
-  border: 1.5px solid var(--green-neon);
-  border-radius: 18px;
+.admin-container .btn {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  border-radius: 10px;
+  padding: 0.45rem 1.2rem;
 }
 
-
-.admin-container input,
-.admin-container select {
+.admin-container .btn-outline-primary {
   background-color: transparent;
-  border: 1.5px solid var(--gray-medium);
-  color: var(--white);
+  border: 1.5px solid var(--green-neon);
+  color: var(--green-neon);
 }
 
-.admin-container input:focus,
-.admin-container select:focus {
-  outline: none;
-  border-color: var(--green-neon);
-  box-shadow: none;
+.admin-container .btn-outline-primary:hover {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
 }
 
 
 @media (max-width: 768px) {
   .admin-container {
-    margin: 4rem auto;
+    padding: 0 1.2rem;
   }
 
-  .admin-container h2 {
-    font-size: 2.2rem;
+  .admin-card {
+    padding: 1.5rem;
   }
 }

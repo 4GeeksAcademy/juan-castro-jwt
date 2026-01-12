@@ -1,0 +1,157 @@
+
+.client-detail-card {
+  background: linear-gradient(145deg, #0b0b0b, #111);
+  border: 2px solid #9cff00;
+  border-radius: 22px;
+  padding: 2.8rem;
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(156, 255, 0, 0.15);
+  width: 100%;
+}
+
+
+.client-name {
+  font-family: var(--font-title, "Oswald", sans-serif);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9cff00;
+  margin-bottom: 2rem;
+}
+
+/* grid del formulario */
+.client-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* textarea ocupa toda la fila */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* inputs */
+.client-detail-card input,
+.client-detail-card select,
+.client-detail-card textarea {
+  width: 100%;
+  background-color: transparent;
+  border: 1.5px solid #444;
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.client-detail-card textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+/* Placeholder */
+.client-detail-card input::placeholder,
+.client-detail-card textarea::placeholder {
+  color: #888;
+}
+
+/* Focus */
+.client-detail-card input:focus,
+.client-detail-card select:focus,
+.client-detail-card textarea:focus {
+  outline: none;
+  border-color: #9cff00;
+  box-shadow: 0 0 12px rgba(156, 255, 0, 0.25);
+}
+
+/* estados deshabilitados */
+.client-detail-card input:disabled,
+.client-detail-card select:disabled,
+.client-detail-card textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.trainer-error {
+  color: #ff5f5f;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+
+.trainer-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+/* Botón principal (Guardar / Crear) */
+.btn-neon {
+  background-color: #9cff00;
+  color: #000;
+  border: none;
+  border-radius: 14px;
+  padding: 0.7rem 2.2rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-neon:hover {
+  background-color: #b6ff1a;
+  box-shadow: 0 0 18px rgba(156, 255, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background-color: transparent;
+  border: 1.5px solid #888;
+  color: #fff;
+  border-radius: 14px;
+  padding: 0.7rem 1.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #888;
+  color: #000;
+}
+
+/* txto cuando no hay cliente */
+.trainer-loading {
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+  margin-top: 4rem;
+}
+
+@media (max-width: 1200px) {
+  .client-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .client-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trainer-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-neon,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

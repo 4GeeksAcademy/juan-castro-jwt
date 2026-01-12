@@ -1,0 +1,145 @@
+
+.registro-container {
+  min-height: 100vh;
+  padding: 1.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768179608/gym_nep2y0.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* overlay */
+.registro-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.46);
+  z-index: 1;
+}
+
+
+.registro-card {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 500px;
+
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 22px;
+  padding: 2.8rem 2.4rem;
+}
+
+
+.registro-title {
+  font-family: var(--font-title);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--green-neon);
+  margin-bottom: 2.5rem;
+}
+
+/* inputs */
+.registro-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.6rem;
+}
+
+.registro-group label {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+  color: var(--white);
+}
+
+.registro-group input,
+.registro-group select {
+  background-color: transparent;
+  border: 1.5px solid var(--gray-medium);
+  border-radius: 10px;
+  padding: 0.7rem;
+  color: var(--white);
+}
+
+.registro-group select option {
+  background-color: var(--black-primary);
+  color: var(--white);
+}
+
+.registro-group input:focus,
+.registro-group select:focus {
+  outline: none;
+  border-color: var(--green-neon);
+  box-shadow: 0 0 0 1px var(--green-neon);
+}
+
+
+.btn-neon {
+  width: 100%;
+  margin-top: 1.5rem;
+
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+
+  border: none;
+  border-radius: 12px;
+  padding: 0.8rem;
+
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-neon:hover:not(:disabled) {
+  background-color: #ccff00;
+  box-shadow: 0 0 18px rgba(180, 255, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-neon:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.registro-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(0, 0, 0, 0.25);
+  border-top: 3px solid var(--black-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (max-width: 768px) {
+  .registro-card {
+    padding: 2.2rem 1.6rem;
+  }
+
+  .registro-title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+}

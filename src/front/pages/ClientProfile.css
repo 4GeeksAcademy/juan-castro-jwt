@@ -1,0 +1,105 @@
+
+.profile-container {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 1.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768189908/Dise%C3%B1o_sin_t%C3%ADtulo_9_cegfn4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: var(--white);
+}
+
+.profile-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.549);
+  z-index: 1;
+}
+
+
+.profile-card {
+  width: 100%;
+  max-width: 520px;
+
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 22px;
+
+  padding: 2.8rem 2.4rem;
+  z-index: 2;
+}
+
+
+.profile-title {
+  font-family: var(--font-title);
+  color: var(--green-neon);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+
+  text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+
+.profile-info p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: var(--gray-light);
+}
+
+.profile-info span {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-right: 0.3rem;
+}
+
+
+.profile-observations {
+  margin-top: 1.8rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--gray-medium);
+}
+
+.profile-observations span {
+  display: block;
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+  margin-bottom: 0.6rem;
+  color: var(--white);
+}
+
+.profile-observations p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--gray-light);
+}
+
+
+.profile-loading {
+  margin-top: 6rem;
+  text-align: center;
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  color: var(--green-neon);
+}
+
+
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 2.2rem 1.6rem;
+  }
+
+  .profile-title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+}

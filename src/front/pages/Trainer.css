@@ -1,0 +1,125 @@
+
+.trainer-container {
+  min-height: 100vh;
+  padding: 5rem 2rem;
+  background-color: var(--black-primary);
+  color: var(--white);
+
+background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768188615/Dise%C3%B1o_sin_t%C3%ADtulo_8_jcxwyt.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+}
+
+/* overlay */
+.trainer-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.704);
+  z-index: 1;
+}
+
+
+
+.trainer-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2.5rem;
+  z-index: 2;
+}
+
+
+.trainer-sidebar {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 20px;
+  padding: 1.8rem;
+  z-index: 2;
+}
+
+.trainer-new-btn {
+  width: 100%;
+  margin-bottom: 1.5rem;
+
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  background-color: transparent;
+  border: 1.5px solid var(--green-neon);
+  color: var(--green-neon);
+
+  padding: 0.7rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.trainer-new-btn:hover {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+}
+
+/* lista de clientes  */
+.trainer-client-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.trainer-client-item {
+  background-color: transparent;
+  border: 1px solid var(--gray-medium);
+  color: var(--white);
+
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trainer-client-item:hover {
+  border-color: var(--green-neon);
+  color: var(--green-neon);
+}
+
+.trainer-client-item.active {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+  border-color: var(--green-neon);
+}
+
+
+.trainer-content {
+  background-color: var(--black-soft);
+  border: 1.5px solid var(--green-neon);
+  border-radius: 20px;
+  padding: 2.2rem;
+   z-index: 2;
+}
+
+
+.trainer-loading {
+  margin-top: 6rem;
+  text-align: center;
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  color: var(--green-neon);
+}
+
+
+@media (max-width: 900px) {
+  .trainer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .trainer-sidebar {
+    margin-bottom: 2rem;
+  }
+}

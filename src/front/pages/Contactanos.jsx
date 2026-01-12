@@ -20,7 +20,7 @@ const Contactanos = () => {
 
   return (
     <section className="contact-container">
-      <h1 className="contact-title">Contacto</h1>
+      <h1 className="contact-title">Contáctanos</h1>
 
       <form className="contact-form" onSubmit={handleSubmit}>
         <div className="form-group">
