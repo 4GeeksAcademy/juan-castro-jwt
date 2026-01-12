@@ -1,5 +1,8 @@
+import "./Footer.css";  
+
+
 export const Footer = () => (
-    <footer className="footer mt-auto py-3 text-center bg-body-tertiary">
+    <footer className="footer mt-auto py-3 text-center">
         <p>
             Check the{" "}
             <a

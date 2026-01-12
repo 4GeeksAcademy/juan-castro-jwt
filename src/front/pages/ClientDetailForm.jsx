@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import "./ClientDetailForm.css";
 
-
-const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
+const ClientDetailForm = ({
+  client,
+  isCreating,
+  onSave,
+  onCancelCreate,
+  saving,
+  error
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,9 +17,10 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
     peso: "",
     rutina: "",
     observaciones: "",
-    estado: "",
+    estado: "Activo",
   });
-  const [isModified, setIsModified] = useState(false);
+
+
   useEffect(() => {
     if (isCreating) {
       setFormData({
@@ -25,8 +33,8 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
         observaciones: "",
         estado: "Activo",
       });
-
-      setIsModified(true);
+      
+      setIsModified(true); 
     } else if (user) {
       const newData = {
         name: user.name || "",
@@ -42,64 +50,67 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
       setIsModified(false);
     } else {
       setFormData({
-        name: "",
-        email: "",
+        name: client.name || "",
+        email: client.email || "",
         password: "",
-        altura: "",
-        peso: "",
-        rutina: "",
-        observaciones: "",
-        estado: "",
+        altura: client.altura || "",
+        peso: client.peso || "",
+        rutina: client.rutina || "",
+        observaciones: client.observaciones || "",
+        estado: client.estado || "Activo",
       });
-      setIsModified(false);
     }
   }, [client, isCreating]);
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   setIsModified(true);
-  // };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (isCreating) {
-  //     if (!formData.name || !formData.email || !formData.password) {
-  //       alert("Nombre, Email y Contraseña son obligatorios");
-  //       return;
-  //     }
-  //   }
-  //   onSave(formData);
-  //   if (!isCreating) setIsModified(false);
-  // };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const payload = isCreating
+      ? {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          altura: formData.altura,
+          peso: formData.peso,
+          rutina: formData.rutina,
+          observaciones: formData.observaciones,
+          estado: formData.estado,
+        }
+      : {
+          altura: formData.altura,
+          peso: formData.peso,
+          rutina: formData.rutina,
+          observaciones: formData.observaciones,
+          estado: formData.estado,
+        };
+
+    onSave(payload);
+  };
+
   if (!client && !isCreating) {
-    return (
-      <div className="card shadow-sm h-100">
-        <div className="card-body d-flex flex-column align-items-center justify-content-center text-center p-5">
-          <i
-            className="bi bi-person-circle text-muted"
-            style={{ fontSize: "5rem" }}
-          ></i>
-          <h4 className="mt-4 text-muted">Selecciona un cliente</h4>
-          <p className="text-muted">
-            Elige un cliente de la lista para ver y editar sus datos
-          </p>
-        </div>
-      </div>
-    );
+    return <p className="trainer-loading">Selecciona un cliente</p>;
   }
+
+
   return (
     <div className="card shadow-sm border-primary">
       <div
-        className={`card-header ${isCreating ? "bg-success text-white" : "bg-white"
-          } border-bottom`}
+        className={`card-header ${
+          isCreating ? "bg-success text-white" : "bg-white"
+        } border-bottom`}
       >
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center">
             <div
-              className={`rounded-circle ${isCreating ? "bg-white text-success" : "bg-primary text-white"
-                } d-flex align-items-center justify-content-center me-3`}
+              className={`rounded-circle ${
+                isCreating ? "bg-white text-success" : "bg-primary text-white"
+              } d-flex align-items-center justify-content-center me-3`}
               style={{ width: "60px", height: "60px", fontSize: "28px" }}
             >
               {isCreating ? (
@@ -319,17 +330,24 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
                 )}
                 {isCreating && (
                   <button
-                    type="button" className="btn btn-secondary" onClick={onCancelCreate}>Cancelar</button>
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={onCancelCreate}
+                  >
+                    Cancelar
+                  </button>
                 )}
                 <button
                   type="submit"
-                  className={`btn ${isCreating ? "btn-success" : "btn-primary"
-                    }`}
+                  className={`btn ${
+                    isCreating ? "btn-success" : "btn-primary"
+                  }`}
                   disabled={!isModified && !isCreating}
                 >
                   <i
-                    className={`bi ${isCreating ? "bi-plus-circle" : "bi-save"
-                      } me-2`}
+                    className={`bi ${
+                      isCreating ? "bi-plus-circle" : "bi-save"
+                    } me-2`}
                   ></i>
                   {isCreating ? "Crear Cliente" : "Guardar Cambios"}
                 </button>
@@ -338,30 +356,8 @@ const ClientDetailForm = ({ user, onSave, isCreating, onCancelCreate }) => {
           </div>
         </form>
       </div>
-      {/* Footer con información adicional (Solo si no es CREANDO) */}
-      {!isCreating && (
-        <div className="card-footer bg-light">
-          <div className="row text-center">
-            <div className="col-md-4">
-              <small className="text-muted d-block">Altura</small>
-              <strong>{formData.altura ? `${formData.altura} cm` : "-"}</strong>
-            </div>
-            <div className="col-md-4">
-              <small className="text-muted d-block">Peso</small>
-              <strong>{formData.peso ? `${formData.peso} kg` : "-"}</strong>
-            </div>
-            <div className="col-md-4">
-              <small className="text-muted d-block">IMC</small>
-              <strong>
-                {formData.altura && formData.peso
-                  ? (formData.peso / (formData.altura / 100) ** 2).toFixed(1)
-                  : "-"}
-              </strong>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    </form>
   );
 };
+
 export default ClientDetailForm;

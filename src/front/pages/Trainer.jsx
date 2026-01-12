@@ -1,141 +1,75 @@
-import React, { useEffect, useState } from "react";
-import ClientDetailForm from "./ClientDetailsForm";
+import React, { useState, useEffect } from "react";
+import "./Trainer.css";
 
 const Trainer = () => {
-  const [clients, setClients] = useState([]);
-  const [selectedClient, setSelectedClient] = useState(null);
-  const [isCreating, setIsCreating] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState(null);
+    const [trainers, setTrainers] = useState([]);
+    const [error, setError] = useState(null);
 
-  const BACKEND = import.meta.env.VITE_BACKEND_URL;
+    const BACKEND = import.meta.env.VITE_BACKEND_URL;
 
-  useEffect(() => {
-    fetchClients();
-  }, []);
+    useEffect(() => {
+        fetch(`${BACKEND}/api/users`)
+            .then((res) => {
+                if (!res.ok) throw new Error("Error al cargar entrenadores");
+                return res.json();
+            })
+            .then((data) => {
+                const onlyTrainers = data.filter(user => user.role === "trainer");
+                setTrainers(onlyTrainers);
+            })
+            .catch((err) => setError(err.message));
+    }, [BACKEND]);
 
-  const fetchClients = async () => {
-    const token = localStorage.getItem("access_token");
+    return (
+        <div className="admin-wrapper">
+            <div className="admin-container">
+                <h2 className="text-center mb-5">Gestión de Entrenadores</h2>
 
-    const res = await fetch(`${BACKEND}/api/users`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+                <div className="trainer-layout">
+                    {/* ASIDE: LISTA DE ENTRENADORES */}
+                    <aside className="trainer-sidebar">
+                        <h4>Entrenadores Activos</h4>
+                        {error && <p className="text-danger">{error}</p>}
+                        <div className="trainer-list">
+                            {trainers.map((t) => (
+                                <div key={t.id} className="trainer-item-card">
+                                    <p className="mb-0"><strong>{t.name}</strong></p>
+                                    <small>{t.email}</small>
+                                </div>
+                            ))}
+                        </div>
+                    </aside>
 
-    let data = null;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = null;
-    }
-    const clientsOnly = Array.isArray(data) ? data.filter(u => u.role === 'client') : [];
-    setClients(clientsOnly);
-    setLoading(false);
-  };
-
-  const handleSave = async (formData) => {
-    const token = localStorage.getItem("access_token");
-    setSaving(true);
-    setError(null);
-
-    const url = isCreating
-      ? `${BACKEND}/api/users`
-      : `${BACKEND}/api/users/${selectedClient?.id}`;
-
-    const method = isCreating ? "POST" : "PUT";
-    const payload = isCreating ? formData : { ...(selectedClient || {}), ...formData };
-
-    try {
-      const res = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        let errMsg = `Error ${res.status}`;
-        try {
-          const errJson = await res.json();
-          errMsg = errJson.message || JSON.stringify(errJson);
-        } catch (e) {
-          const text = await res.text();
-          if (text) errMsg = text;
-        }
-        setError(errMsg);
-        setSaving(false);
-        return;
-      }
-
-      const updated = await res.json();
-
-      if (isCreating) {
-        setClients(prev => [...prev, updated]);
-      } else {
-        setClients(prev =>
-          prev.map(c => (c.id === updated.id ? updated : c))
-        );
-      }
-
-      setSelectedClient(updated);
-      setIsCreating(false);
-    } catch (err) {
-      setError(err.message || 'Error de red');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  if (loading) return <p className="text-center mt-5">Cargando clientes...</p>;
-
-  return (
-    <div className="container mt-4">
-      <div className="row">
-
-        <div className="col-md-4">
-          <div className="list-group">
-            {/* <button
-              className="list-group-item list-group-item-action text-success"
-              onClick={() => {
-                setSelectedClient(null);
-                setIsCreating(true);
-              }}
-            >
-              ➕ Nuevo Cliente
-            </button> */}
-
-            {clients.map(client => (
-              <button
-                key={client.id}className={`list-group-item list-group-item-action ${selectedClient?.id === client.id ? "active" : ""
-                  }`}
-                onClick={() => {
-                  setSelectedClient(client);
-                  setIsCreating(false);
-                }}
-              >
-                {client.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="col-md-8">
-          <ClientDetailForm
-            client={selectedClient}
-            isCreating={isCreating}
-            onSave={handleSave}
-            saving={saving}
-            error={error}
-            onCancelCreate={() => setIsCreating(false)}
-          />
-        </div>
-
-      </div>
-    </div>
-  );
+                    {/* CONTENIDO PRINCIPAL / FORMULARIO */}
+                    <div className="trainer-content">
+                        <div className="admin-card">
+                            <h4>Asignar Nueva Rutina</h4>
+                            <p className="text-muted">Selecciona un entrenador para ver sus detalles o asignar tareas.</p>
+                            
+                            <form className="mt-4">
+                                <div className="mb-3">
+                                    <label className="form-label">Entrenador Responsable</label>
+                                    <select className="form-select">
+                                        <option value="">Selecciona un entrenador...</option>
+                                        {trainers.map(t => (
+                                            <option key={t.id} value={t.id}>{t.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">Notas o Instrucciones</label>
+                                    <textarea className="form-control" rows="4" placeholder="Escribe las instrucciones aquí..."></textarea>
+                                </div>
+                                <button type="button" className="btn btn-success w-100">
+                                    Guardar Asignación
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+    );
 };
+
 export default Trainer;
