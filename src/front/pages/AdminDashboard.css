@@ -1,56 +1,57 @@
-
+/* ===============================
+   WRAPPER + OVERLAY
+================================ */
 .admin-wrapper {
+  position: relative;
   min-height: 100vh;
-  padding: 6rem 0;
-  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768190251/Dise%C3%B1o_sin_t%C3%ADtulo_11_zrikid.png");
+  padding: 6rem 2rem;
+
+  background-image: url("https://www.cesurformacion.com/blog/que-es-la-imagen-personal");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
 }
 
 .admin-wrapper::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.38);
   z-index: 1;
 }
 
-
+/* ===============================
+   CONTENEDOR
+================================ */
 .admin-container {
   position: relative;
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 2rem;
-  color: var(--white);
 }
 
-
+/* ===============================
+   TÍTULO
+================================ */
 .admin-container h2 {
   font-family: var(--font-title);
-  color: var(--green-neon);
   letter-spacing: 4px;
-  margin-bottom: 2.5rem;
+  color: var(--green-neon);
+  text-align: center;
+  margin-bottom: 3rem;
   text-transform: uppercase;
 }
 
-
+/* ===============================
+   BUSCADOR
+================================ */
 .admin-search {
   width: 100%;
-  max-width: 480px;
-  margin-bottom: 2.5rem;
-
   background-color: transparent;
   border: 1.5px solid var(--gray-medium);
-  border-radius: 14px;
-
-  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
   color: var(--white);
-
   font-family: var(--font-body);
-  transition: all 0.25s ease;
 }
 
 .admin-search::placeholder {
@@ -60,105 +61,190 @@
 .admin-search:focus {
   outline: none;
   border-color: var(--green-neon);
-  box-shadow: 0 0 12px rgba(156, 255, 0, 0.45);
-  background-color: transparent;
+  box-shadow: 0 0 0 1px var(--green-neon);
 }
 
-
+/* ===============================
+   CARDS (LISTAS)
+================================ */
 .admin-card {
   background-color: var(--black-soft);
   border: 1.5px solid var(--green-neon);
-  border-radius: 22px;
-  padding: 2rem;
+  border-radius: 20px;
+  padding: 2.5rem;
   margin-bottom: 3rem;
 }
 
+.admin-card h4 {
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
 
-.admin-container table {
+/* ===============================
+   TABLAS
+================================ */
+.admin-card table {
   width: 100%;
   border-collapse: collapse;
-  background-color: transparent;
-  color: var(--white);
 }
 
-.admin-container thead {
-  background-color: var(--black-primary);
-}
-
-.admin-container th {
-  font-family: var(--font-title);
-  letter-spacing: 1px;
-  color: var(--green-neon);
-  padding: 1rem;
+.admin-card thead {
   border-bottom: 1.5px solid var(--green-neon);
+}
+
+.admin-card th,
+.admin-card td {
+  padding: 1rem;
   text-align: left;
+  color: var(--white);
+  font-size: 0.9rem;
 }
 
-.admin-container td {
-  padding: 0.9rem 1rem;
+.admin-card th {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+}
+
+.admin-card tbody tr {
   border-bottom: 1px solid var(--gray-medium);
-  color: var(--gray-light);
 }
 
-/* hover fila */
-.admin-container tbody tr:hover {
-  background-color: rgba(156, 255, 0, 0.05);
+.admin-card tbody tr:hover {
+  background-color: rgba(0, 255, 120, 0.05);
 }
 
-
+/* ===============================
+   BADGES (ROLES / ESTADOS)
+================================ */
 .badge {
-  font-family: var(--font-title);
-  letter-spacing: 1px;
-  padding: 0.35rem 0.6rem;
-  border-radius: 6px;
-}
-
-.badge.bg-success {
-  background-color: var(--green-neon) !important;
-  color: var(--black-primary);
-}
-
-.badge.bg-warning {
-  background-color: #ffc107 !important;
-  color: var(--black-primary);
-}
-
-.badge.bg-danger {
-  background-color: #ff4d4d !important;
-  color: #000;
-}
-
-.badge.bg-info {
-  background-color: #00bcd4 !important;
-  color: #000;
-}
-
-
-.admin-container .btn {
-  font-family: var(--font-title);
-  letter-spacing: 1px;
+  padding: 0.4rem 0.8rem;
   border-radius: 10px;
-  padding: 0.45rem 1.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-.admin-container .btn-outline-primary {
-  background-color: transparent;
-  border: 1.5px solid var(--green-neon);
-  color: var(--green-neon);
-}
-
-.admin-container .btn-outline-primary:hover {
+.bg-success {
   background-color: var(--green-neon);
   color: var(--black-primary);
 }
 
+.bg-warning {
+  background-color: #ffc107;
+  color: #000;
+}
 
+.bg-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.bg-info {
+  background-color: #0dcaf0;
+  color: #000;
+}
+
+.bg-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* ===============================
+   BOTONES (LISTAS)
+================================ */
+.btn {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+}
+
+.btn-outline-primary {
+  background: transparent;
+  border: 1.5px solid var(--green-neon);
+  color: var(--green-neon);
+  padding: 0.35rem 0.9rem;
+  border-radius: 10px;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--green-neon);
+  color: var(--black-primary);
+}
+
+/* ===============================
+   FORMULARIO DE EDICIÓN
+================================ */
+.card {
+  background-color: var(--black-soft) !important;
+  border: 1.5px solid var(--green-neon) !important;
+  border-radius: 20px !important;
+}
+
+.card h4 {
+  font-family: var(--font-title);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* inputs */
+.form-label {
+  font-family: var(--font-title);
+  letter-spacing: 1px;
+}
+
+.form-control,
+.form-select {
+  background-color: transparent !important;
+  border: 1.5px solid var(--gray-medium) !important;
+  border-radius: 10px !important;
+  color: var(--white) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--green-neon) !important;
+  box-shadow: 0 0 0 1px var(--green-neon) !important;
+}
+
+/* ===============================
+   BOTONES FORMULARIO
+================================ */
+.btn-secondary {
+  background-color: transparent;
+  border: 1.5px solid var(--gray-light);
+  color: var(--gray-light);
+  border-radius: 10px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-light);
+  color: var(--black-primary);
+}
+
+.btn-primary {
+  background-color: var(--green-neon);
+  border: none;
+  color: var(--black-primary);
+  border-radius: 10px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
 @media (max-width: 768px) {
-  .admin-container {
-    padding: 0 1.2rem;
+  .admin-card {
+    padding: 2rem 1.5rem;
   }
 
-  .admin-card {
-    padding: 1.5rem;
+  .admin-card table,
+  .admin-card thead,
+  .admin-card tbody,
+  .admin-card th,
+  .admin-card td,
+  .admin-card tr {
+    font-size: 0.8rem;
   }
 }

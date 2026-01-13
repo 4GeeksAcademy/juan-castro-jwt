@@ -128,14 +128,22 @@ def update_user(user_id):
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
     data = request.get_json()
-    user.name = data.get("name")
-    user.email = data.get("email")
-    user.role = data.get("role")
-    user.estado = data.get("estado")
-    user.altura = data.get("altura")
-    user.peso = data.get("peso")
-    user.rutina = data.get("rutina")
-    user.observaciones = data.get("observaciones")
+
+    # Actualizar solo los campos que vienen en el request
+    if "name" in data:
+        user.name = data.get("name")
+    if "email" in data:
+        user.email = data.get("email")
+    if "role" in data:
+        user.role = data.get("role")
+    if "estado" in data:
+        user.estado = data.get("estado")
+    if "altura" in data:
+        user.altura = data.get("altura")
+    if "peso" in data:
+        user.peso = data.get("peso")
+    if "observaciones" in data:
+        user.observaciones = data.get("observaciones")
 
     db.session.commit()
     return jsonify(user.serialize()), 200
@@ -207,12 +215,44 @@ def assign_exercise():
 @api.route("/my-exercises", methods=["GET"])
 @jwt_required()
 def get_my_exercises():
-    """Obtener ejercicios asignados al cliente logueado"""
+    """Obtener ejercicios asignados al cliente logueado con detalles completos"""
     user_id = int(get_jwt_identity())
-
     assignments = EjercicioAsignado.query.filter_by(user_id=user_id).all()
 
-    return jsonify([a.serialize() for a in assignments]), 200
+    exercises_with_details = []
+    for assignment in assignments:
+        # Obtener detalles del ejercicio desde la API externa
+        try:
+            response = requests.get(
+                "https://api.api-ninjas.com/v1/exercises",
+                headers={"X-Api-Key": API_KEY},
+                params={"name": assignment.execise_name},
+                timeout=5
+            )
+            if response.status_code == 200:
+                data = response.json()
+                if data and len(data) > 0:
+                    exercise_data = data[0]
+                    exercises_with_details.append({
+                        "id": assignment.id,
+                        "user_id": assignment.user_id,
+                        "exercise_name": assignment.execise_name,
+                        "type": exercise_data.get("type"),
+                        "muscle": exercise_data.get("muscle"),
+                        "difficulty": exercise_data.get("difficulty"),
+                        "instructions": exercise_data.get("instructions"),
+                        "safety_info": exercise_data.get("safety_info", "No hay información de seguridad disponible")
+                    })
+                else:
+                    # Si no encuentra el ejercicio, devolver solo lo disponible
+                    exercises_with_details.append(assignment.serialize())
+            else:
+                exercises_with_details.append(assignment.serialize())
+        except Exception as e:
+            print(f"Error fetching exercise details: {e}")
+            exercises_with_details.append(assignment.serialize())
+
+    return jsonify(exercises_with_details), 200
 
 
 @api.route("/client-exercises/<int:client_id>", methods=["GET"])

@@ -4,7 +4,7 @@
   min-height: 100vh;
   padding: 6rem 2rem;
 
-  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768189936/Dise%C3%B1o_sin_t%C3%ADtulo_10_h3vz8w.png");
+  background-image: url("https://res.cloudinary.com/drnsgjgvm/image/upload/v1768179608/gym_nep2y0.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -81,11 +81,16 @@
   border-radius: 10px;
   border: 1.5px solid var(--gray-medium);
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .trainer-item-card:hover {
   border-color: var(--green-neon);
+}
+
+.trainer-item-card.active {
+  border-color: var(--green-neon);
+  background-color: rgba(57, 255, 20, 0.1);
 }
 
 .trainer-item-card p {
@@ -99,6 +104,7 @@
   color: var(--gray-light);
   font-size: 0.8rem;
 }
+
 
 /* ===== CONTENIDO PRINCIPAL ===== */
 .trainer-content {

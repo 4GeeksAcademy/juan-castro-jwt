@@ -44,7 +44,7 @@ const Login = () => {
                 const roleRouteMap = {
                     adm: "/admin",
                     trainer: "/trainer",                    
-                    client: "/perfil"
+                    client: "/dashboard"
                 };
                 const destination = role ? (roleRouteMap[role] || "/dashboard") : "/dashboard";
                 navigate(destination);
